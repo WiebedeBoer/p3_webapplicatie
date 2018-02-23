@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+            border: 1px solid black;
+            text-align: center;
+            font-size: 2vh;
+        }
+        td{
+            padding: 1vh;
+        }
+        body{
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            width: calc(100vw - 2px);
+            overflow-x: hidden;
+        }
+        header{
+            height: calc(15vh - 4px);
+            width: 100vw;
+        }
+        main{
+            position: relative;
+            width: 100vw;
+            height: calc(80vh - 4px);
+            display: table;
+        }
+        #one {
+            margin-top: calc(40vh - 4px - (375.7px / 2));
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin-left: 1vw;
+
+        }
+        #two{
+            margin-top: calc(40vh - 4px - (375.7px / 2));
+            position: absolute;
+            right: 0;
+            top: 0;
+            margin-right: 4vw;
+        }
+        footer{
+            height: calc(5vh - 4px);
+        }
+    </style>
+</head>
+<body>
+<header>
+    Header
+</header>
+<main>
+    Main
+    <table id="one">
+        <tr>
+            <td><h2>Profiel</h2></td>
+        </tr>
+        <tr>
+            <td>Voornaam:</td>
+            <td><input type="text"></td>
+        </tr>
+        <tr>
+            <td>Doopnamen:</td>
+            <td><input type="text"></td>
+        </tr>
+        <tr>
+            <td>Achternaam:</td>
+            <td><input type="text"></td>
+        </tr>
+        <tr>
+            <td>E-mail:</td>
+            <td><input type="email"></td>
+        </tr>
+        <tr>
+            <td>Docent/student:</td>
+            <td> <select>
+                <option value="docent">Docent</option>
+                <option value="student">Student</option>
+            </select> </td>
+        </tr>
+        <tr>
+            <td>Geboortedatum:</td>
+            <td><input type="date"></td>
+        </tr>
+        <tr>
+            <td>Wachtwoord</td>
+            <td><input type="password"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Aanmaken"></td>
+        </tr>
+    </table>
+    <table id="two">
+        <tr>
+            <td> <h2>Vakken</h2></td>
+        </tr>
+        <tr>
+            <td>Analyseren</td>
+            <td>HBO-ICT-1b-anal</td>
+        </tr>
+        <tr>
+            <td>Programmeren</td>
+            <td>HBO-ICT-1b-prog</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Toevoegen"></td>
+        </tr>
+    </table>
+</main>
+<footer>
+    Footer
+</footer>
+</body>
+</html>
