@@ -1,34 +1,36 @@
 <html>
-    <head>
-            <style>
-                DIV.table
-                {
-                    display:table;
-                }
-                FORM.tr, DIV.tr
-                {
-                    display:table-row;
-                }
-                SPAN.td
-                {
-                    display:table-cell;
-                }
-                </style>
+    <head><header>
+            <a href="overzicht.html">overzicht (student)</a> | <a href="enroll.html">enroll (student)</a> | <a href="inleverplek.html">inleverplek (docent)</a> | <a href="Upload_assignment.html">upload assignment (student)</a>  | <a href="item_tovoegen.html">item toevoegen (docent)</a> | <a href="online_frame.html">iframe (docent)</a> | <a href="cijferlijst.html">cijferlijst (student)</a> | <a href="Opdrachtbecijferen.html">opdracht becijferen (docent)</a> | <a href="account_aanmaken.html">account aanmaken (admin)</a>
+            </header>
+            <meta charset="UTF-8">
+  <script language="JavaScript">
+    function showInput() {
+        document.getElementById('display').innerHTML = 
+                    document.getElementById("user_input").value;
+    }
+  </script>
+
     </head>
     <body>
         <div>
-
-                
-                        <header>
-<a href="overzicht.html">overzicht (student)</a> | <a href="enroll.html">enroll (student)</a> | <a href="inleverplek.html">inleverplek (docent)</a> | <a href="Upload_assignment.html">upload assignment (student)</a>  | <a href="item_tovoegen.html">item toevoegen (docent)</a> | <a href="online_frame.html">iframe (docent)</a> | <a href="cijferlijst.html">cijferlijst (student)</a> | <a href="Opdrachtbecijferen.html">opdracht becijferen (docent)</a> | <a href="account_aanmaken.html">account aanmaken (admin)</a>
-</header>
-
                 <div class="table">
                          <tr>
-                        <td>persoon en vak</td>
-                        <td><form class="tr" method="post" action="Opdrachtbecijferen.html"><input type="text" name="tekst"><input type="Submit" value="becijfer"></form></td>
+                        <td>
+                            <form>
+                                <input type="text" name="message" id="user_input">
+                            </form>
+                                  <input type="submit" onclick="showInput();myFunction();"><td><p id='display'></p></td>
                         </tr>
                 </div>
+                <script>
+                function myFunction() {
+                    var x = document.getElementById("user_input");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+                }</script>
         </div>
     </body>
 </html>
