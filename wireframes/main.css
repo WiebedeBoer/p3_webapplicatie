@@ -1,0 +1,51 @@
+header{width:100%;height:105px}
+main{width:100%}
+footer{width:100%}
+div.hoofdmenubalk{width:2110px;height: 110px;border-bottom:2px solid black;margin-top:20px;}
+#leerjaarkeuze{float:left;margin-left:170px;border:2px solid black;height: 50px;width:125px;text-align: center;text-align: center;font-size:16pt;}
+#cijferlijst{height: 60px;width:125px;background-color: yellowgreen;text-align: center;padding-top:6px;font-size:14pt;margin-left:865px}
+div.profiel{position: absolute;float:top;margin-left:1310px;border:2px solid;width:350px;height: 100px;text-align: left;font-family:Arial, Helvetica, sans-serif}
+
+img{float:left;max-width:100%;max-height: 100%;}
+
+div.overzichtblokken{margin-left:150px;margin-top:100px;padding:0px;height: 850px;width:1600px;border:3px;}
+div.periode1{margin-left: 20px;text-align:center;display:inline-block;height: 740px;width:350px;border: 3px solid black;position: absolute}
+div.p1vak1{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p1vak2{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p1vak3{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p1vak4{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p1vak5{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p1vak6{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p1vak7{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p1vak8{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+
+div.periode2{margin-left: 400px;text-align:center;display:inline-block;height: 740px;width:350px;border: 3px solid black;position:absolute}
+div.p2vak1{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p2vak2{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p2vak3{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p2vak4{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p2vak5{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p2vak6{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p2vak7{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p2vak8{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+
+div.periode3{margin-left: 780px;text-align:center;display:inline-block;height: 740px;width:350px;border: 3px solid black;position:absolute}
+div.p3vak1{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p3vak2{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p3vak3{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p3vak4{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p3vak5{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p3vak6{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+
+div.periode4{margin-left: 1160px;text-align:center;display:inline-block;height: 740px;width:350px;border: 3px solid black;position:absolute}
+div.p4vak1{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p4vak2{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p4vak3{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p4vak4{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+div.p4vak5{text-align:left;height:45px;width: 330px;padding-left:35px;padding-top:15px;padding-right:15px;display:inline-flex;font-family:Arial, Helvetica, sans-serif;font-size:16pt}
+
+div.titelvak1{height: 70px;width:350px;border-bottom: 1px solid black;}
+div.titelvak2{height: 70px;width:350px;border-bottom: 1px solid black;}
+div.titelvak3{height: 70px;width:350px;border-bottom: 1px solid black;}
+div.titelvak4{height: 70px;width:350px;border-bottom: 1px solid black;}
+
