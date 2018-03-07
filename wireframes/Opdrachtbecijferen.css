@@ -1,0 +1,29 @@
+span
+{
+    border: 1px solid black;
+    padding: 2px;
+}
+body {
+    background-color:grey;
+}
+#Header{
+            border: solid darkgray 2px;
+            color: black;
+            background-color:white;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 30px;
+            padding-left: 30px;
+}
+
+#Becijferen{
+            width: 300px;
+            border: solid darkgray 2px;
+            color: black;
+            background-color:white;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 30px;
+            padding-left: 30px;
+            float: left;
+}
