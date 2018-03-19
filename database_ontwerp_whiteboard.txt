@@ -1,0 +1,83 @@
+CREATE TABLE [dbo].[users] (
+    [Id]       INT           IDENTITY (1, 1) NOT NULL,
+    [email]    NVARCHAR (80) NOT NULL,
+    [password] NVARCHAR (20) NOT NULL,
+    [status]    BOOL          NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[admins] (
+    [Id]       INT           IDENTITY (1, 1) NOT NULL,
+    [email]    NVARCHAR (80) NOT NULL,
+    [password] NVARCHAR (20) NOT NULL,
+    [usertype]   NVARCHAR (20) NOT NULL,
+    [status]    BOOL          NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+CREATE TABLE [dbo].[studies] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [naam]      NVARCHAR (50) NOT NULL,
+    [priority]  INT           NOT NULL,
+    [description] TEXT        NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[courses] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [naam]      NVARCHAR (50) NOT NULL,
+    [period]    INT (1)       NOT NULL,
+    [priority]  INT           NOT NULL,
+    [description] TEXT        NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[course_items] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [naam]      NVARCHAR (50) NOT NULL,
+    [CourseID]  INT           NOT NULL,
+    [description] TEXT           NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[enrolled] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [userype]   NVARCHAR (20) NOT NULL,
+    [CourseID]  INT           NOT NULL,
+    [UserId]    INT           NOT NULL,
+    [status]    BOOL          NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[opdrachten] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [userype]   NVARCHAR (20) NOT NULL,
+    [CourseID]  INT           NOT NULL,
+    [UserId]    INT           NOT NULL,
+    [status]    BOOL          NULL,
+    [deadline]  DATETIME      NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+CREATE TABLE [dbo].[becijfering] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [userype]   NVARCHAR (20) NOT NULL,
+    [CourseID]  INT           NOT NULL,
+    [StudentId]    INT           NOT NULL,
+    [AssessorId] INT           NOT NULL,
+    [status]    BOOL          NULL,
+    [delivered] DATETIME      NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[cijfers] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [Cijfer]  INT           NOT NULL,
+    [CourseID]  INT           NOT NULL,
+    [OpdrachtID]  INT           NOT NULL,
+    [CijferID]  INT           NOT NULL,
+    [StudentId]    INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
