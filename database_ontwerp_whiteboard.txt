@@ -28,6 +28,7 @@ CREATE TABLE [dbo].[courses] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
     [naam]      NVARCHAR (50) NOT NULL,
     [period]    INT (1)       NOT NULL,
+    [studieID]  INT           NOT NULL,
     [priority]  INT           NOT NULL,
     [description] TEXT        NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
@@ -43,10 +44,9 @@ CREATE TABLE [dbo].[course_items] (
 
 CREATE TABLE [dbo].[enrolled] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
-    [userype]   NVARCHAR (20) NOT NULL,
+    [usertype]   NVARCHAR (20) NOT NULL,
     [CourseID]  INT           NOT NULL,
     [UserId]    INT           NOT NULL,
-    [status]    BOOL          NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
