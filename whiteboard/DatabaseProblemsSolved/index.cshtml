@@ -1,0 +1,26 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    RenderPage("head.cshtml")
+</head>
+<body>
+    <header>
+        RenderPage("menu.cshtml")
+    </header>
+    <main>
+        <div class="rij">
+            <div class="login">
+                <h2>Login</h2>
+                <form action="login.cshtml" method="post" class="form-control-plaintext">
+                    <br>E-mail: <input type="text" name="email" class="form-control" placeholder="youremail@gmail.com">
+                    <br>Wachtwoord: <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <br><input type="submit" value="login" class="btn">
+                </form>
+            </div>
+            </div>
+    </main>
+    <footer>
+        RenderPage("footer.cshtml")       
+    </footer>
+</body>
+</html>
