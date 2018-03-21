@@ -1,0 +1,9 @@
+mappen structuur voor upgeloade word bestanden bij inleveren
+
+opleiding -> vak -> [ingeleverde bestanden]
+
+CREATE DIRECTORY
+
+
+vak map wordt pas aangemaakt de eerste keer een inleverplek wordt aangemaakt voor dat vak
+
