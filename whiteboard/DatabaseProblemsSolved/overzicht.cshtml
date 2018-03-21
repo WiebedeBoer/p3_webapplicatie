@@ -1,0 +1,58 @@
+﻿@using WebMatrix.Data;
+@{
+    Database db = Database.Open("TodoDbCntStrng");
+
+    int userID = Convert.ToInt32(Session["id"]);
+    var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
+    int studieID = Convert.ToInt32(vstudieID);
+
+
+}
+<link rel="stylesheet" type="text/css" href="~/overzichtstyle.css" />
+
+<head>
+    
+</head>
+
+<body>
+    <select id="leerjaarkeuze">
+        <option value="leerjaar1">Leerjaar 1</option>
+        <option value="leerjaar2">Leerjaar 2</option>
+        <option value="leerjaar3">Leerjaar 3</option>
+        <option value="leerjaar4">Leerjaar 4</option>
+    </select>
+
+    <div id="periodesOverzicht">
+        <div id="eersteBlok" style="display:table-cell">
+            Periode 1
+        @{ 
+            var naam = "SELECT Id, naam, studieID, priority, description FROM courses WHERE period=1 AND studieID=@0";
+            var vakken = db.Query(naam, studieID);
+        }
+        </div>
+        <div id="tweedeBlok" style="display:table-cell">
+            Periode 2
+            @{
+       naam = "SELECT Id, naam, studieID, priority, description FROM courses WHERE period=1 AND studieID=@0";
+       vakken = db.Query(naam, studieID);
+            }
+        </div>
+        <div id="derdeBlok" style="display:table-cell">
+            Periode 3
+            @{
+       naam = "SELECT Id, naam, studieID, priority, description FROM courses WHERE period=1 AND studieID=@0";
+       vakken = db.Query(naam, studieID);
+            }
+        </div>
+        <div id="vierdeBlok" style="display:table-cell">
+            Periode 4
+            @{
+       naam = "SELECT Id, naam, studieID, priority, description FROM courses WHERE period=1 AND studieID=@0";
+       vakken = db.Query(naam, studieID);
+            }
+        </div>
+    </div>
+
+</body>
+
+<footer></footer>
