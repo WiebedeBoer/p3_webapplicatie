@@ -23,6 +23,19 @@
     var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
     var vakken = db.Query(vakCommand, userID);
 
+
+
+    if (IsPost) {
+
+        int eId = Convert.ToInt32(Request.Form["enrollen"]);
+        string gebruikerstype = "student";
+
+        var insertCommand = "INSERT INTO enrolled (usertype, CourseID, UserId) VALUES(@0, @1, @2)";
+        db.Execute(insertCommand, gebruikerstype, eId, userID);
+
+    }
+
+
     <h2>Enrroll</h2>
     <form action="~/enroll.cshtml" method="post">
         <select name="enrollen">
