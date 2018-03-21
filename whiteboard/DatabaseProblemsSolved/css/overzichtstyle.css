@@ -1,0 +1,52 @@
+﻿body {margin:0px; width:100%;
+}
+select#leerjaarkeuze{
+margin-top:150px;
+}
+div#periodesOverzicht{
+margin-left:150px;
+    width:1750px;
+    height:725px;
+
+}
+div#eersteBlok {
+    text-align: center;
+    font-family:Papyrus;
+    font-size: 16pt;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+    width: 400px;
+    height: 700px;
+    border: 2px solid black;
+}
+
+div#tweedeBlok {
+    text-align: center;
+    font-family: Papyrus;
+    font-size: 16pt;
+    display: inline-block;
+    width: 400px;
+    height: 700px;
+    border: 2px solid black;
+}
+
+div#derdeBlok {
+    text-align: center;
+    font-family: Papyrus;
+    font-size: 16pt;
+    display: inline-block;
+    width: 400px;
+    height: 700px;
+    border: 2px solid black;
+}
+
+div#vierdeBlok {
+    text-align: center;
+    font-family: Papyrus;
+    font-size: 16pt;
+    display: inline-block;
+    width: 400px;
+    height: 700px;
+    border: 2px solid black;
+}
