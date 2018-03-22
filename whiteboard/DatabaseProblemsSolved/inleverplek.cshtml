@@ -14,26 +14,25 @@
     </header>
     <main>
         @{
-            var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
-            int studieID = Convert.ToInt32(vstudieID);
-
-            var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
-            var vakken = db.Query(vakCommand, userID);
+            string Citem = Request.QueryString["type"];
 
             if (IsPost)
             {
-                int eId = Convert.ToInt32(Request.Form["enrollen"]);
-                string gebruikerstype = "student";
 
-                //var insertCommand = "INSERT INTO enrolled (usertype, CourseID, UserId) VALUES(@0, @1, @2)";
-                //db.Execute(insertCommand, gebruikerstype, eId, userID);
+                string inleveren = "<form action="uploads.cshtml" method="post" enctype="multipart/form-data"> <label for="file">Bestand:</label><input type ="file" name ="file" id ="file" />  <input type ="submit" name ="submit" value ="upload" /> ";
+                int CoItem = Convert.ToInt32(Citem);
+                var updCommand = "UPDATE course_items SET desription = @0 WHERE Id =@1";
+                db.Execute(updCommand, inleveren, CoItem);
+            }
+            else
+            {
+                <h2>Inleverplek Aanmaken</h2>
+                            <form action="~/inleverplek.cshtml" method="post">
+                                <input type="hidden" value="@Citem" />
+                                <input type="submit" value="maak inleverplek" />
+                            </form>
             }
 
-            <h2>Inleverplek Aanmaken</h2>
-            <form action="~/enroll.cshtml" method="post">
-                <input type="hidden" value="" />
-                <input type="submit" value="maak" />
-            </form>
         }
     </main>
     <footer>
