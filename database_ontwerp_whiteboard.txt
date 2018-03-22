@@ -4,7 +4,7 @@ CREATE TABLE [dbo].[users] (
     [password] NVARCHAR (70) NOT NULL,
     [studieID]  INT           NOT NULL,
     {enrollYear] INT          NOT NULL,
-    [status]    BIT          NULL,
+    [status]    TINYINT          NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[admins] (
     [password] NVARCHAR (70) NOT NULL,
     [usertype]   NVARCHAR (20) NOT NULL,
     [studieID]  INT           NULL,
-    [status]    BIT          NULL,
+    [status]    TINYINT          NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
@@ -50,15 +50,16 @@ CREATE TABLE [dbo].[enrolled] (
     [usertype]   NVARCHAR (20) NOT NULL,
     [CourseID]  INT           NOT NULL,
     [UserId]    INT           NOT NULL,
+    [status]    TINYINT          NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
 CREATE TABLE [dbo].[opdrachten] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
-    [userype]   NVARCHAR (20) NOT NULL,
+    [usertype]   NVARCHAR (20) NOT NULL,
     [CourseID]  INT           NOT NULL,
     [UserId]    INT           NOT NULL,
-    [status]    BIT          NULL,
+    [status]    TINYINT          NULL,
     [deadline]  DATETIME      NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
@@ -66,11 +67,11 @@ CREATE TABLE [dbo].[opdrachten] (
 
 CREATE TABLE [dbo].[becijfering] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
-    [userype]   NVARCHAR (20) NOT NULL,
+    [usertype]   NVARCHAR (20) NOT NULL,
     [CourseID]  INT           NOT NULL,
     [StudentId]    INT           NOT NULL,
     [AssessorId] INT           NOT NULL,
-    [status]    BIT          NULL,
+    [status]    TINYINT          NULL,
     [delivered] DATETIME      NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
