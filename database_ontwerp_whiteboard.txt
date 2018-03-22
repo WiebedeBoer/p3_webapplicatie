@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[admins] (
     [email]    NVARCHAR (80) NOT NULL,
     [password] NVARCHAR (20) NOT NULL,
     [usertype]   NVARCHAR (20) NOT NULL,
+    [studieID]  INT           NULL,
     [status]    BIT          NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
