@@ -58,6 +58,7 @@ CREATE TABLE [dbo].[opdrachten] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
     [usertype]   NVARCHAR (20) NOT NULL,
     [CourseID]  INT           NOT NULL,
+    [cijfer]    INT           NOT NULL DEFAULT 0,
     [UserId]    INT           NOT NULL,
     [status]    TINYINT          NULL,
     [deadline]  DATETIME      NULL,
@@ -73,12 +74,13 @@ CREATE TABLE [dbo].[becijfering] (
     [AssessorId] INT           NOT NULL,
     [status]    TINYINT          NULL,
     [delivered] DATETIME      NULL,
+    [cijfer] DECIMAL      NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
 CREATE TABLE [dbo].[cijfers] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
-    [Cijfer]  INT           NOT NULL,
+    [Cijfer]  DECIMAL          NOT NULL,
     [CourseID]  INT           NOT NULL,
     [OpdrachtID]  INT           NOT NULL,
     [CijferID]  INT           NOT NULL,
