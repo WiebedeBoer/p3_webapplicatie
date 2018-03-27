@@ -19,7 +19,7 @@
             if (IsPost)
             {
 
-                string inleveren = "<form action="uploads.cshtml" method="post" enctype="multipart/form-data"> <label for="file">Bestand:</label><input type ="file" name ="file" id ="file" />  <input type ="submit" name ="submit" value ="upload" /> ";
+                string inleveren = "<form action=\"uploads.cshtml\" method=\"post\" enctype=\"multipart/form-data\"> <label for=\"file\">Bestand:</label><input type =\"file\" name =\"file\" id =\"file\" />  <input type =\"submit\" name =\"submit\" value =\"upload\" />";
                 int CoItem = Convert.ToInt32(Citem);
                 var updCommand = "UPDATE course_items SET desription = @0 WHERE Id =@1";
                 db.Execute(updCommand, inleveren, CoItem);

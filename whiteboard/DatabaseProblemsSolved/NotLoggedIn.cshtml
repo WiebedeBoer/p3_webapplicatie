@@ -1,0 +1,70 @@
+﻿@{
+    App app = new App();
+}
+@if (app.user.IsLoggedIn())
+{
+    @RenderPage("/Default.cshtml")
+}
+else
+{
+<head>
+    <title>Home - A Special Day</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+
+
+    <script type="text/javascript" src="~/Includes/JS/Home.js"></script>
+</head>
+<body>
+    <header>
+    </header>
+    <main>
+        <table>
+            <tr>
+                <td>
+                    <div id="login">
+
+                        <table id="logintable" style="width: 50vw;">
+                            <tr>
+                                <td><h2>Login</h2></td>
+                            </tr>
+                            <tr>
+                                <td>E-mailadres: </td>
+                                <td>
+                                    <input name="email" id="email" type="email" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Wachtwoord:
+                                </td>
+                                <td>
+                                    <input name="password" id="password" type="password" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button onclick="Login();" class="btn waves-effect waves-light" type="submit" name="action">
+                                        Inloggen
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                    <button class="btn waves-effect waves-light" type="submit" name="action">Wachtwoord vergeten?</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div id="errormessages" style="height: 2.5vh; color:red;"></div></td>
+                            </tr>
+                        </table>
+
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </main>
+</body>
+}

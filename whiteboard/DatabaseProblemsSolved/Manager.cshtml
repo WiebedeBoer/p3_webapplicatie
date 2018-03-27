@@ -1,0 +1,48 @@
+﻿@{
+
+    if (IsPost)
+    {
+        if (!String.IsNullOrEmpty(Request.Form["module"]) && !String.IsNullOrEmpty(Request.Form["task"]))
+        {
+            App app = new App();
+
+            if (Validation.IsValid(Request.Form["module"]) && Validation.IsValid(Request.Form["task"]))
+            {
+                string module = Request.Form["module"], task = Request.Form["task"];
+                if (app.user.IsLoggedIn())
+                {
+                    switch (module)
+                    {
+                        case "user":
+                            string resp = app.user.LogIn("","");
+                            Response.Write(resp);
+                            break;
+                    }
+                } else
+                {
+                    switch (module)
+                    {
+                        case "user":
+                            switch (task)
+                            {
+                                case "login":
+                                    if(!String.IsNullOrEmpty(Request.Form["email"]) && !String.IsNullOrEmpty(Request.Form["pass"]))
+                                    {
+                                        Response.Write(app.user.LogIn(Request.Form["email"], Request.Form["pass"]));
+                                    } 
+                                    break;
+                            }
+                            break;
+                        case "Overview":
+                            switch (task)
+                            {
+                                case "nhl":
+                                    break;
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+    }
+}

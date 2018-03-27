@@ -1,0 +1,82 @@
+﻿@using WebMatrix.Data;
+@{
+    App app = new App();
+    Database db = app.db;
+    int userID = Convert.ToInt32(Session["id"]);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    RenderPage("head.cshtml")
+</head>
+<body>
+    <header>
+        RenderPage("menu.cshtml")
+    </header>
+    <main>
+        @{
+
+            int cid = Convert.ToInt32(Request.QueryString["course"]);
+
+            if (IsPost)
+            {
+                int rij = Convert.ToInt32(Request.Form["rij"]);
+                int cijfer = Convert.ToInt32(Request.Form["cijferinput"]);
+                var rijcount = "SELECT COUNT(Id) FROM becijfering WHERE Id =@0";
+                int rijcheck = Convert.ToInt32(db.Query(rijcount, rij));
+                if (rijcheck == 1)
+                {
+                    var rijvar = "UPDATE becijfering SET cijfer =@0 WHERE Id =@1";
+                    db.Execute(rijvar, cijfer, rij);
+                    <p>Updated</p>
+                }
+                
+            }
+
+
+            var vakCommand = "SELECT Id, UserID, Cijfer FROM opdrachten WHERE CourseID =@0";
+            var opdrachten = db.Query(vakCommand, cid);
+
+            <h2>Enroll</h2>
+
+            <table>
+                <tr>
+                    <th>Cijfer</th>
+                    <th>Becijfer</th>
+                </tr>
+                @foreach (var recrod in opdrachten)
+                {
+
+                    int student = @recrod.UserID;
+
+
+                    var CoCommand = "SELECT cijfer, status, delivered FROM becijfering WHERE CourseID =@0 AND StudentId =@1";
+                    var cijfercheck = db.QuerySingle(CoCommand, cid, student);
+
+                    int cijfertjecheck = Convert.ToInt32(cijfercheck.status);
+
+                    if (cijfertjecheck == 0)
+                    {
+                        var naamCommand = "SELECT naam FROM users WHERE Id =@0";
+                        string studentnaam = Convert.ToString(db.Query(naamCommand, student));
+                        <tr><td>@cijfercheck.delivered</td><td>@cijfercheck.Cijfer</td><td><form action="~/enroll.cshtml" method="post"><input type="hidden" value="@recrod.Id" name="rij" /><input type="text" name="cijferinput" /><input type="submit" value="becijfer" /></form></td></tr>
+
+                    }
+                else {
+                <tr>
+                    <td>@cijfercheck.delivered</td>
+                    <td>@cijfercheck.Cijfer</td>
+                    <td>< form action = "~/enroll.cshtml" method = "post" ><input type="hidden" value="@recrod.Id" name="rij" /><input type="text" name="cijferinput" />< input type = "submit" value = "becijfer" /></ form ></td>
+                </tr>
+                }
+
+
+                }
+            </table>
+        }
+    </main>
+    <footer>
+        RenderPage("footer.cshtml")
+    </footer>
+</body>
+</html>
