@@ -3,7 +3,7 @@ CREATE TABLE [dbo].[users] (
     [email]    NVARCHAR (80) NOT NULL,
     [password] NVARCHAR (70) NOT NULL,
     [studieID]  INT           NOT NULL,
-    {enrollYear] INT          NOT NULL,
+    [enrollYear] INT          NOT NULL,
     [status]    TINYINT          NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
