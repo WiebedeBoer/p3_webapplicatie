@@ -1,25 +1,25 @@
 CREATE TABLE [dbo].[users] (
-    [Id]       INT           IDENTITY (1, 1) NOT NULL,
-    [email]    NVARCHAR (80) NOT NULL,
-    [password] NVARCHAR (70) NOT NULL,
-    [naam] NVARCHAR (70) NOT NULL,
-    [studieID]  INT           NOT NULL,
-    [enrollYear] INT          NOT NULL,
-    [status]    TINYINT          NULL,
+    [Id]        INT            IDENTITY (1, 1) NOT NULL,
+    [firstName] TEXT           NOT NULL,
+    [lastName]  TEXT           NOT NULL,
+    [email]     NVARCHAR (80)  NOT NULL,
+    [password]  NVARCHAR (MAX) NOT NULL,
+    [studieID]  INT            NOT NULL,
+    [status]    TINYINT        NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
 
 CREATE TABLE [dbo].[admins] (
-    [Id]       INT           IDENTITY (1, 1) NOT NULL,
-    [email]    NVARCHAR (80) NOT NULL,
-    [password] NVARCHAR (70) NOT NULL,
-    [naam] NVARCHAR (70) NOT NULL,
-    [usertype]   NVARCHAR (20) NOT NULL,
-    [studieID]  INT           NULL,
-    [status]    TINYINT          NULL,
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [firstName] TEXT          NOT NULL,
+    [lastName]  TEXT          NOT NULL,
+    [email]     NVARCHAR (80) NOT NULL,
+    [password]  NVARCHAR (70) NOT NULL,
+    [usertype]  NVARCHAR (20) NOT NULL,
+    [status]    TINYINT       NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
 
 CREATE TABLE [dbo].[studies] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
