@@ -1,0 +1,28 @@
+﻿@using WebMatrix.Data;
+@{
+    /*int userId = 0;
+    Database db = Database.Open("database");
+    var userData = db.Query("SELECT users.name, users.email, studies.naam FROM users" +
+        "INNER JOIN studies ON studies.Id = users.studieID" +
+        "WHERE users.Id = @0", userId);*/
+}
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/header.css" />
+
+</head>   
+
+<div class="header row">
+
+    <div class="userData_right">
+        <img src="~/css/profilepic.jpg" alt="user img" float="left" id="profilepic" />
+        @*@foreach (var item in userData)
+            {
+                <p>@item.name</p>
+                <p>@item.email</p>
+                <p>@item.naam</p>
+            }*@
+        <p><strong>naam</strong></p>
+        <p>email</p>
+        <p>studie</p>
+    </div>
+</div>
