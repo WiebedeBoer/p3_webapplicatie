@@ -6,21 +6,17 @@
     var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
     int studieID = Convert.ToInt32(vstudieID);
 }
-<link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />
 
 
 <head>
-    @RenderPage("_header.cshtml")
+    <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />
+
 
 </head>
 
 <body>
-
-    <style>
-        body {
-        }
-    </style>
-    <header></header>
+    <header>    </header>
+    @RenderPage("_header.cshtml")
     <select id="leerjaarkeuze">
         <option value="leerjaar1">Leerjaar 1</option>
         <option value="leerjaar2">Leerjaar 2</option>
