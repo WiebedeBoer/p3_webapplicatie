@@ -1,5 +1,6 @@
 ﻿body {
     background-image: url(overzicht-wallpaper.jpg);
+    background-repeat:no-repeat;
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -18,8 +19,8 @@ div.overzichtblokken {
     margin-left: 150px;
     margin-top: 100px;
     padding: 0px;
-    height: 850px;
-    width: 1600px;
+    height: 750px;
+    width: 1400px;
     border: 3px;
 }
 
@@ -66,3 +67,4 @@ div#periodesOverzicht {
     height: 725px;
     text-align: left;
 }
+

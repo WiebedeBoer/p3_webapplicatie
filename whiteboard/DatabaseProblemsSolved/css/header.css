@@ -8,9 +8,14 @@
 }
 
 
+
+
 .userData * {
-    display: inline;
+    display:contents;
 }
+
+
+
 img#profilepic{
     float:left;
     max-height:80%;
@@ -20,13 +25,12 @@ img#profilepic{
 
 }
 div.userData_right{
+    margin-right:50px;
     background-color:white;
-    position: absolute;
-    float: top;
-    margin-left: 1400px;
+    float: right;
     border: 2px solid;
     width: 350px;
-    height: 125px;
+    height: 130px;
     text-align: left;
     font-family: Arial, Helvetica, sans-serif;
     padding-left:10px;
