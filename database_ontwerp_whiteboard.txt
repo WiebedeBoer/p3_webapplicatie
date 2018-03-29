@@ -41,6 +41,13 @@ CREATE TABLE [dbo].[courses] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+CREATE TABLE [dbo].[subcourses] (
+    [Id]          INT           IDENTITY (1, 1) NOT NULL,
+    [naam]        NVARCHAR (50) NOT NULL,
+    [studieID]    INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
 CREATE TABLE [dbo].[course_items] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
     [naam]      NVARCHAR (50) NOT NULL,
