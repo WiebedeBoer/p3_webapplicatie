@@ -45,6 +45,8 @@ CREATE TABLE [dbo].[subcourses] (
     [Id]          INT           IDENTITY (1, 1) NOT NULL,
     [naam]        NVARCHAR (50) NOT NULL,
     [studieID]    INT           NOT NULL,
+    [description] TEXT          NULL,
+    [filename]    VARCHAR (255) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
