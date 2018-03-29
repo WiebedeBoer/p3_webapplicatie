@@ -35,7 +35,13 @@
     <!DOCTYPE html>
     <html>
     <head>
-        <!--RenderPage("head.cshtml")-->
+        <!--<link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Compiled and minified CSS -->
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
+        <!--<link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />-->
+        <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle_oudje.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/header.css" />
     </head>
     <body>
         <header>
@@ -115,6 +121,9 @@
                 //als gebruiker is docent
                 else
                 {
+                    //dynamic currentuser = app.user.getUser();
+                    //int userID = int.Parse(currentuser["Id"].ToString());
+
                     int userID = 1;
 
                     var vstudieID = db.QueryValue("SELECT StudieID FROM admins WHERE Id=@0", userID);
@@ -124,33 +133,62 @@
                     if (IsPost)
                     {
                         int eId = Convert.ToInt32(Request.Form["enrollen"]);
-                        string gebruikerstype = "student";
+                        string sactie = Request.Form["actie"];
 
-                        var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0";
-                        int CountCourse = Convert.ToInt32(db.QueryValue(CoCommand, eId));
-
-                        var CoECommand = "SELECT COUNT(id) FROM enrolled WHERE CourseID =@0 AND UserId =@1";
-                        int ECourse = Convert.ToInt32(db.QueryValue(CoECommand, eId, userID));
-
-                        if (CountCourse == 1 && ECourse == 0)
+                        if (sactie =="autoenroll")
                         {
-                            var updCommand = "UPDATE enrolled SET status = 1 WHERE usertype =@0 AND CourseID =@1 AND Status =0";
-                            db.Execute(updCommand, gebruikerstype, eId);
-                            <p>auto enrolled voor het vak</p>
+                            string gebruikerstype = "student";
+
+                            var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0";
+                            int CountCourse = Convert.ToInt32(db.QueryValue(CoCommand, eId));
+
+                            var CoECommand = "SELECT COUNT(id) FROM enrolled WHERE CourseID =@0 AND UserId =@1";
+                            int ECourse = Convert.ToInt32(db.QueryValue(CoECommand, eId, userID));
+
+                            if (CountCourse == 1 && ECourse == 0)
+                            {
+                                var updCommand = "UPDATE enrolled SET status = 1 WHERE usertype =@0 AND CourseID =@1 AND Status =0";
+                                db.Execute(updCommand, gebruikerstype, eId);
+                                <p>auto enrolled voor het vak</p>
+                            }
+                            else
+                            {
+                                <p class="error">enrolled failed</p>
+                            }
                         }
-                        else
+                        else if (sactie == "enrolldocent")
                         {
-                            <p class="error">enrolled failed</p>
+                            var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0";
+                            int CountCourse = Convert.ToInt32(db.QueryValue(CoCommand, eId));
+
+                            var CoECommand = "SELECT COUNT(id) FROM enrolled WHERE CourseID =@0 AND UserId =@1";
+                            int ECourse = Convert.ToInt32(db.QueryValue(CoECommand, eId, userID));
+
+                            string gebruikerstype = "student";
+
+                            if (CountCourse == 1 && ECourse == 0)
+                            {
+                                var updCommand = "UPDATE enrolled SET status = 1 WHERE usertype =@0 AND CourseID =@1 AND UserId =@2";
+                                db.Execute(updCommand, gebruikerstype, eId, userID);
+                                <p>enrolled voor het vak</p>
+                            }
+                            else
+                            {
+                                <p class="error">enrolled failed</p>
+                            }
                         }
+
+
                     }
 
 
-
+                    //display enroll auto students
                     var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
                     var vakken = db.Query(vakCommand, userID);
 
-                    <h2>Enroll</h2>
+                    <h2>Auto Enroll Students</h2>
                     <form action="~/enroll.cshtml" method="post">
+                        <input type="hidden" name="actie" value="autoenroll" />
                         <select name="enrollen">
                             @foreach (var recrod in vakken)
                             {
@@ -159,14 +197,32 @@
 
                             }
                         </select>
-                        <input type="submit" value="auto enroll all" />
+                        <input type="submit" value="auto enroll all students" />
+                    </form>
+
+                    //enroll docent
+                    var vakdCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
+                    var vakkend = db.Query(vakdCommand, userID);
+
+                    <h2>Enroll Self</h2>
+                    <form action="~/enroll.cshtml" method="post">
+                        <input type="hidden" name="actie" value="enrolldocent" />
+                        <select name="enrollen">
+                            @foreach (var record in vakkend)
+                            {
+
+                                <option value="@record.Id">@record.naam</option>
+
+                            }
+                        </select>
+                        <input type="submit" value="enroll self" />
                     </form>
 
                 }
             }
         </main>
         <footer>
-            RenderPage("footer.cshtml")
+            <!--RenderPage("footer.cshtml")-->
         </footer>
     </body>
 </html>
