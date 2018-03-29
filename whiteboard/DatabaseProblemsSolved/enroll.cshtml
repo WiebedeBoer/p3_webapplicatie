@@ -9,16 +9,29 @@
     Database db = app.db;
 
     dynamic currentuser = app.user.getUser();
-    string usermail = currentuser["email"].ToString();
+    int usersoort = int.Parse(currentuser["userType"]);
+    // string usermail = currentuser["email"].ToString();
 
+    /* string usertype = "";
+     if (usermail.Split('@')[1] == "nhl.nl")
+     {
+         usertype = "student";
+     }
+     else
+     {
+         usertype = "docent";
+     }*/
     string usertype = "";
-    if (usermail.Split('@')[1] == "nhl.nl")
-    {
-        usertype = "student";
+    if (usersoort ==1) {
+        usertype= "student";
     }
-    else
+    else if (usersoort == 2)
     {
         usertype = "docent";
+    }
+    else if (usersoort == 3)
+    {
+        usertype = "admin";
     }
 
     <head>
@@ -191,19 +204,27 @@
                     var vakdCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
                     var vakkend = db.Query(vakdCommand, userID);
 
-                    <h2>Enroll Self</h2>
-                    <form action="~/enroll.cshtml" method="post">
-                        <input type="hidden" name="actie" value="enrolldocent" />
-                        <select name="enrollen">
-                            @foreach (var record in vakkend)
-                            {
+                    var CoEnrCommand = "SELECT COUNT(id) FROM enrolled WHERE UserId =@0 AND status =0";
+                    int EnrCourse = Convert.ToInt32(db.QueryValue(CoEnrCommand, userID));
 
-                                <option value="@record.Id">@record.naam</option>
+                    if (EnrCourse >= 1)
+                    {
+                        <h2>Enroll Self</h2>
+                        <form action="~/enroll.cshtml" method="post">
+                            <input type="hidden" name="actie" value="enrolldocent" />
+                            <select name="enrollen">
+                                @foreach (var record in vakkend)
+                                {
 
-                            }
-                        </select>
-                        <input type="submit" value="enroll self" />
-                    </form>
+                                    <option value="@record.Id">@record.naam</option>
+
+                                }
+                            </select>
+                            <input type="submit" value="enroll self" />
+                        </form>
+                    }
+
+
 
 
                 }
