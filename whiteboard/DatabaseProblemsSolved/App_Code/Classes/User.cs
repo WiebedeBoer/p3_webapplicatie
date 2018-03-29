@@ -50,31 +50,40 @@ public class User
             return e.ToString();
         }
     }
-    public string RegisterAdmin(string firstName, string lastName, string email, string pass, int permission, int activated)
+    public string RegisterAdmin(string firstName, string lastName, string email, string pass, int permission, int activated, int studieID)
     {
-            EmailAddressAttribute evalidator = new EmailAddressAttribute();
-            if (evalidator.IsValid(email))
+        EmailAddressAttribute evalidator = new EmailAddressAttribute();
+        if (evalidator.IsValid(email))
+        {
+
+            string query1 = "SELECT email FROM admins WHERE email=@0";
+            dynamic result = db.Query(query1, email.ToLower());
+            if (result.Count == 0)
             {
 
-                string query1 = "SELECT email FROM admins WHERE email=@0";
-                dynamic result = db.Query(query1, email.ToLower());
-                if (result.Count == 0)
-                {
 
+                if (studieID == 0)
+                {
                     string query2 = "INSERT INTO admins (firstname, lastname, email, password, usertype, status) VALUES (@0, @1, @2, @3, @4, @5)";
                     db.Execute(query2, firstName, lastName, email.ToLower(), BCrypt.Net.BCrypt.HashPassword(pass), permission, activated);
-                    return "Success!";
                 }
                 else
                 {
-                    return "E-mailadres is is ongeldig of bestaat al in onze database!";
+                    string query2 = "INSERT INTO admins (firstname, lastname, email, password, usertype, studieID, status) VALUES (@0, @1, @2, @3, @4, @5, @6)";
+                    db.Execute(query2, firstName, lastName, email.ToLower(), BCrypt.Net.BCrypt.HashPassword(pass), permission, studieID, activated);
                 }
+
+                return "Success!";
             }
             else
             {
                 return "E-mailadres is is ongeldig of bestaat al in onze database!";
             }
-        
+        }
+        else
+        {
+            return "E-mailadres is is ongeldig of bestaat al in onze database!";
+        }
     }
     public string LogIn(string email, string pass)
     {
@@ -149,10 +158,11 @@ public class User
             {
                 string query1;
                 if (email.Split('@')[1] == "nhl.nl")
-                    query1 = "SELECT Id, firstName, lastName, email, usertype, status FROM admins WHERE Id=@0";
+                    query1 = "SELECT admins.Id AS Id, firstName, lastName, email, usertype, studieID, status, studies.naam AS studyName FROM admins INNER JOIN studies ON admins.studieID=studies.Id WHERE users.Id=@0";
                 else
-                    query1 = "SELECT Id, firstName, lastName, email, studieID, status FROM users WHERE Id=@0";
-                return db.Query(query1, uid);
+                    query1 = "SELECT users.Id AS Id, firstName, lastName, email, studieID, status, studies.naam AS studyName FROM users INNER JOIN studies ON users.studieID=studies.Id WHERE users.Id=@0";
+                dynamic result = db.Query(query1, uid);
+                return result[0];
             }
             } 
        throw new ArgumentException("User is not logged in!");
