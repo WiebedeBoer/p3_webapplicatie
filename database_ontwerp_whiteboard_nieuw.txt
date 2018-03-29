@@ -51,12 +51,15 @@ CREATE TABLE [dbo].[subcourses] (
 );
 
 CREATE TABLE [dbo].[course_items] (
-    [Id]        INT           IDENTITY (1, 1) NOT NULL,
-    [naam]      NVARCHAR (50) NOT NULL,
-    [CourseID]  INT           NOT NULL,
-    [description] TEXT           NULL,
+    [Id]          INT           IDENTITY (1, 1) NOT NULL,
+    [naam]        NVARCHAR (50) NOT NULL,
+    [CourseID]    INT           NOT NULL,
+    [description] TEXT          NULL,
+    [filename]    VARCHAR (255) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
 
 CREATE TABLE [dbo].[enrolled] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
