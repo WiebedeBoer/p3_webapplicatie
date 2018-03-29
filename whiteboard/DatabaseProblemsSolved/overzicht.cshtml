@@ -9,20 +9,13 @@
 
 
 <head>
-    <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />
-
-
+    <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css"/>
 </head>
 
 <body>
-    <header>    </header>
+
     @RenderPage("_header.cshtml")
-    <select id="leerjaarkeuze">
-        <option value="leerjaar1">Leerjaar 1</option>
-        <option value="leerjaar2">Leerjaar 2</option>
-        <option value="leerjaar3">Leerjaar 3</option>
-        <option value="leerjaar4">Leerjaar 4</option>
-    </select>
+
 
     <div id="overzichtblokken">
         <div id="overzichtblokkenrow">
@@ -52,7 +45,7 @@
                                     }
                                 </td>
                                 <td>
-                                    @vak["naam"]
+                                    <a href="~/Course.cshtml?id=@vak.courseId">@vak["naam"]</a>
                                 </td>
 
 
@@ -91,7 +84,7 @@
                                     }
                                 </td>
                                 <td>
-                                    @vak["naam"]
+                                    <a href="~/Course.cshtml?id=@vak.courseId">@vak["naam"]</a>
                                 </td>
 
 
@@ -129,7 +122,7 @@
                                     }
                                 </td>
                                 <td>
-                                    @vak["naam"]
+                                    <a href="~/vakkenpagina.cshtml?id=@vak.courseId">@vak["naam"]</a>
                                 </td>
 
 
@@ -167,7 +160,7 @@
                                     }
                                 </td>
                                 <td>
-                                    @vak["naam"]
+                                    <a href="~/vakkenpagina.cshtml?id=@vak.courseId">@vak["naam"]</a>
                                 </td>
 
 

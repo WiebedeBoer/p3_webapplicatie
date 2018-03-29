@@ -1,17 +1,32 @@
 ﻿@using WebMatrix.Data;
 @{
-    //int userId = 1;
-    //Database db = Database.Open("TodoDbCntStrng");
-    App app = new App();
-    Database db = app.db;
-    dynamic currentuser = app.user.getUser();
+    int userId = 1;
+    Database db = Database.Open("TodoDbCntStrng");
+    var userData = db.Query("SELECT users.naam, users.email, studies.naam as studie FROM users INNER JOIN studies ON studies.Id = users.studieID WHERE users.Id = @0", userId);
 }
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />
+</head>
+
+
+
 <div class="header row">
-    <a href="~/overzicht.cshtml"><img id="homeknop" src="~/css/overzicht-homeknop.png" /></a>
+    <a href="~/overzicht.cshtml"><img id="homeknop" src="~/Includes/Images/overzicht-homeknop.png" /></a>
     <div class="userData_right">
-        <img src="~/css/profilepic.jpg" alt="user img" float="left" id="profilepic" />
-            <p><strong>@currentuser.firstName @currentuser.lastName</strong></p>
-                <p>@currentuser.email</p>
-                <p>@currentuser.studyName</p>
+        <img src="~/Includes/Images/profilepic.jpg" alt="user img" float="left" id="profilepic" />
+        @foreach (var item in userData)
+        {
+            <p><strong>@item.naam</strong></p>
+            <p>@item.email</p>
+            <p>@item.studie</p>
+        }
     </div>
+    
+    <select id="leerjaarkeuze">
+    <option style="color:white" value="leerjaar1">Leerjaar 1</option>
+    <option style="color:white" value="leerjaar2">Leerjaar 2</option>
+    <option style="color:white" value="leerjaar3">Leerjaar 3</option>
+    <option style="color:white" value="leerjaar4">Leerjaar 4</option>
+</select>
+
 </div>
