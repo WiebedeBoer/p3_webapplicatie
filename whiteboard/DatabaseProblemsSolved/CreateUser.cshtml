@@ -1,11 +1,14 @@
 ﻿@{
-    
+
 }
 <head>
-
+    <script src="~/Includes/JS/CreateUser.js"></script>
+    <link href="~/Includes/CSS/CreateUser.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-    <header></header>
+    <header>
+        <img src="~/Includes/Images/overzicht-homeknop.png" />
+    </header>
     <main>
         <table>
             <tr>
@@ -17,21 +20,42 @@
                 <td><input id="lastname" type="text" /></td>
             </tr>
             <tr>
-                <td>Voornaam: </td>
-                <td><input id="firstname" type="text" /></td>
-            </tr>
-            <tr>
                 <td>E-mail: </td>
-                <td><input type="email" /></td>
+                <td><input id="email" type="email" /></td>
             </tr>
             <tr>
                 <td>Wachtwoord: </td>
-                <td><input type="password" /></td>
+                <td><input id="password" type="password" /></td>
             </tr>
         </table>
+        <table>
+            <tr>
+                <td>Gebruikerstype: </td>
+                <td>
+                    <select id="usertype" onchange="usertypechange()"><option value="0" selected>Leerling</option><option value="1">Docent</option><option value="2">Admin</option></select>
+                </td>
 
-        <select onchange="usertypechange()"><option value="0" selected>Leerling</option><option value="1">Docent</option><option value="2">Admin</option></select>
-        <select><option value="1" selected>Ja</option><option value="0">Nee</option></select>
+            </tr>
+            <tr>
+                <td>
+                    Geactiveerd:
+                </td>
+                <td>
+                    <select id="activated"><option value="1" selected>Ja</option><option value="0">Nee</option></select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    StudieID:
+                </td>
+                <td>
+                    <input type="number" id="studieid" />
+                </td>
+            </tr>
+            <tr>
+                <td><button onclick="createNew();">Aankmaken</button></td>
+            </tr>
+        </table>
     </main>
     <footer></footer>
 </body>

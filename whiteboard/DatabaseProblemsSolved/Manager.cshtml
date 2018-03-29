@@ -14,11 +14,25 @@
                     switch (module)
                     {
                         case "user":
-                            string resp = app.user.LogIn("","");
-                            Response.Write(resp);
+                            switch (task)
+                            {
+                                case "createUser":
+                                    if (!String.IsNullOrEmpty(Request.Form["firstname"]) && !String.IsNullOrEmpty(Request.Form["lastname"]) && !String.IsNullOrEmpty(Request.Form["email"]) && !String.IsNullOrEmpty(Request.Form["password"]) && Request.Form["activated"] != null && !String.IsNullOrEmpty(Request.Form["studieID"]))
+                                    {
+                                        Response.Write(app.user.RegisterUser(Request.Form["firstname"], Request.Form["lastname"], Request.Form["email"], Request.Form["password"], int.Parse(Request.Form["activated"]), int.Parse(Request.Form["studieID"])));
+                                    }
+                                    break;
+                                case "createAdmin":
+                                    if (!String.IsNullOrEmpty(Request.Form["firstname"]) && !String.IsNullOrEmpty(Request.Form["lastname"]) && !String.IsNullOrEmpty(Request.Form["email"]) && !String.IsNullOrEmpty(Request.Form["password"]) && Request.Form["activated"] != null && !String.IsNullOrEmpty(Request.Form["userType"]))
+                                    {
+                                        Response.Write(app.user.RegisterAdmin(Request.Form["firstname"], Request.Form["lastname"], Request.Form["email"], Request.Form["password"], int.Parse(Request.Form["userType"]), int.Parse(Request.Form["activated"]), int.Parse(Request.Form["studieID"])));
+                                    }
+                                    break;
+                            }
                             break;
                     }
-                } else
+                }
+                else
                 {
                     switch (module)
                     {
@@ -26,10 +40,10 @@
                             switch (task)
                             {
                                 case "login":
-                                    if(!String.IsNullOrEmpty(Request.Form["email"]) && !String.IsNullOrEmpty(Request.Form["pass"]))
+                                    if (!String.IsNullOrEmpty(Request.Form["email"]) && !String.IsNullOrEmpty(Request.Form["pass"]))
                                     {
                                         Response.Write(app.user.LogIn(Request.Form["email"], Request.Form["pass"]));
-                                    } 
+                                    }
                                     break;
                             }
                             break;

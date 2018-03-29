@@ -9,18 +9,24 @@
 {
         Database db = app.db;
         dynamic currentuser = app.user.getUser();
-        int userID = Convert.ToInt32(Session["id"]);
-        var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", currentuser["Id"]);
+        int userID = int.Parse(currentuser["Id"].ToString());
+        var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
         int studieID = Convert.ToInt32(vstudieID);
 <head>
-    <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />
+    <!--<link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
+    <!-- Compiled and minified CSS -->
+     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />-->
+    <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle_oudje.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/header.css" />
 </head>
 
 <body>
-    <header>    </header>
+    <header> <a href="~/enroll.cshtml">enroll</a> </header>
     @RenderPage("_header.cshtml")
+    
     <select id="leerjaarkeuze">
         <option value="leerjaar1">Leerjaar 1</option>
         <option value="leerjaar2">Leerjaar 2</option>
