@@ -1,25 +1,18 @@
 ﻿@using WebMatrix.Data;
 @{
     App app = new App();
-    // Database db = Database.Open("TodoDbCntStrng");
-
 }
+
 
 @if (app.user.IsLoggedIn())
 {
     Database db = app.db;
 
-    //Database db = Database.Open("TodoDbCntStrng");
-
-    //int userID = Convert.ToInt32(Session["id"]);
-
-    /*
-    string useremail = Convert.ToString(Session["email"]);
-    string[] splitted = useremail.Split('@');
+    dynamic currentuser = app.user.getUser();
+    string usermail = currentuser["email"].ToString();
 
     string usertype = "";
-
-    if (splitted[1] == "student.nhl.nl")
+    if (usermail.Split('@')[1] == "nhl.nl")
     {
         usertype = "student";
     }
@@ -27,13 +20,7 @@
     {
         usertype = "docent";
     }
-    */
 
-    string usertype = "student";
-
-
-    <!DOCTYPE html>
-    <html>
     <head>
         <!--<link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -53,8 +40,8 @@
                 //als gebruiker is student
                 if (usertype == "student")
                 {
-                                      
-                    dynamic currentuser = app.user.getUser();
+
+                    //dynamic currentuser = app.user.getUser();
                     int userID = int.Parse(currentuser["Id"].ToString());
 
                     var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
@@ -122,9 +109,9 @@
                 else
                 {
                     //dynamic currentuser = app.user.getUser();
-                    //int userID = int.Parse(currentuser["Id"].ToString());
+                    int userID = int.Parse(currentuser["Id"].ToString());
 
-                    int userID = 1;
+                    //int userID = 1;
 
                     var vstudieID = db.QueryValue("SELECT StudieID FROM admins WHERE Id=@0", userID);
                     int studieID = Convert.ToInt32(vstudieID);
@@ -135,7 +122,7 @@
                         int eId = Convert.ToInt32(Request.Form["enrollen"]);
                         string sactie = Request.Form["actie"];
 
-                        if (sactie =="autoenroll")
+                        if (sactie == "autoenroll")
                         {
                             string gebruikerstype = "student";
 
@@ -218,6 +205,7 @@
                         <input type="submit" value="enroll self" />
                     </form>
 
+
                 }
             }
         </main>
@@ -225,6 +213,6 @@
             <!--RenderPage("footer.cshtml")-->
         </footer>
     </body>
-</html>
+ }
 
-                }
+
