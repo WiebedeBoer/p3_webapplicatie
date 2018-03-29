@@ -1,0 +1,64 @@
+﻿@using WebMatrix.Data;
+@{
+    App app = new App();
+    // Database db = Database.Open("TodoDbCntStrng");
+}
+
+@if (app.user.IsLoggedIn())
+{
+    Database db = app.db;
+    dynamic currentuser = app.user.getUser();
+    int userID = int.Parse(currentuser["Id"].ToString());
+    var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
+    int studieID = Convert.ToInt32(vstudieID);
+    <head>
+        <!--<link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- Compiled and minified CSS -->
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
+        <!--<link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />-->
+        <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle_oudje.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/header.css" />
+    </head>
+    <body>
+        <header>
+            <!--RenderPage("menu.cshtml")-->
+        </header>
+        <main>
+            @{
+                int cid = Convert.ToInt32(Request.QueryString["course"]);
+                var vakCommand = "SELECT Id, UserID, Cijfer FROM opdrachten WHERE CourseID =@0";
+                var opdrachten = db.Query(vakCommand, cid);
+
+                <h1>Cijferlijst</h1>
+                <table>
+                    <tr>
+                        <th>Vak</th>
+                        <th>Cijfer</th>
+                    </tr>
+                    @foreach (var CourseId in opdrachten)
+                    {
+                        int student = CourseId.UserID;
+
+                        var CoCommand = "SELECT StudentId, CijferID, CourseID, Cijfer FROM cijfer WHERE CourseID =@0 AND StudentId =@1";
+                        var cijfercheck = db.QuerySingle(CoCommand, cid, student);
+                        var naamcommand = "SELECT naam FROM courses WHERE CourseId = @0 AND StudentId = @1";
+                        var naamcheck = db.QuerySingle(naamcommand, student);
+                        <tr>
+                            <td>@naamcheck.naam</td>
+                            <td>@cijfercheck.Cijfer</td>
+                        </tr>
+                    }
+                </table>
+            }
+        </main>
+        <footer>
+            <!-- RenderPage("footer.cshtml")-->
+        </footer>
+    </body>
+}
+else
+{
+@RenderPage("/NotLoggedIn.cshtml")
+}
