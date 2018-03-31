@@ -1,7 +1,15 @@
 ﻿@using WebMatrix.Data;
 @using Microsoft.Web.Helpers;
 @{
-    Database db = Database.Open("TodoDbCntStrng");
+    App app = new App();
+    // Database db = Database.Open("TodoDbCntStrng");
+
+}
+
+@if (app.user.IsLoggedIn())
+{
+    Database db = app.db;
+    dynamic currentuser = app.user.getUser();
 
     var fileName = "";
 
@@ -112,7 +120,7 @@
                             <label for='link'>Link</label>
                             <input class="linkTxt" type="text" name="link" />
                         </div>
-                        
+
 
                         <input class="btn" type="submit" name="submit" value="Submit" />
                     </form>
@@ -121,3 +129,4 @@
         </div>
     </div>
 </body>
+}
