@@ -1,0 +1,17 @@
+﻿@using WebMatrix.Data;
+@{
+    //int userId = 1;
+    //Database db = Database.Open("TodoDbCntStrng");
+    App app = new App();
+    Database db = app.db;
+    dynamic currentuser = app.user.getUser();
+}
+<div class="header row">
+    <a href="~/overzicht.cshtml"><img id="homeknop" src="~/css/overzicht-homeknop.png" /></a>
+    <div class="userData_right">
+        <img src="~/css/profilepic.jpg" alt="user img" float="left" id="profilepic" />
+            <p><strong>@currentuser.firstName @currentuser.lastName</strong></p>
+                <p>@currentuser.email</p>
+                <p>@currentuser.studyName</p>
+    </div>
+</div>
