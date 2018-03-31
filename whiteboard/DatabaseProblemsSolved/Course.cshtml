@@ -1,7 +1,8 @@
-﻿@{
+﻿@using WebMatrix.Data;
+@{
     App app = new App();
     // Database db = Database.Open("TodoDbCntStrng");
-
+    
 }
 
 @if (app.user.IsLoggedIn())
@@ -64,4 +65,8 @@
             </div>
         </div>
     </body>
+}
+else
+{
+    @RenderPage("/NotLoggedIn.cshtml")
 }

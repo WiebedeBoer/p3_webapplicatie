@@ -1,7 +1,13 @@
 ﻿@using WebMatrix.Data;
 @{
-    Database db = Database.Open("TodoDbCntStrng");
+    App app = new App();
+    // Database db = Database.Open("TodoDbCntStrng");
 
+}
+
+@if (app.user.IsLoggedIn())
+{
+    Database db = app.db;
     if (IsPost)
     {
         if (Request.Form["width"] != null && Request.Form["height"] != null)
@@ -61,3 +67,7 @@
         </div>
     </div>
 </body>
+}
+else {
+@RenderPage("/NotLoggedIn.cshtml")
+}
