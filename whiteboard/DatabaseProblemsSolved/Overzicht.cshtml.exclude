@@ -1,0 +1,200 @@
+﻿@using WebMatrix.Data;
+@{
+    App app = new App();
+    // Database db = Database.Open("TodoDbCntStrng");
+
+}
+
+@if (app.user.IsLoggedIn())
+{
+        Database db = app.db;
+        dynamic currentuser = app.user.getUser();
+        int userID = int.Parse(currentuser["Id"].ToString());
+        var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
+        int studieID = Convert.ToInt32(vstudieID);
+<head>
+    <!--<link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified CSS -->
+     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />-->
+    <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle_oudje.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/header.css" />
+</head>
+
+<body>
+    <header> <a href="~/enroll.cshtml">enroll</a> </header>
+    @RenderPage("_header.cshtml")
+    
+    <select id="leerjaarkeuze">
+        <option value="leerjaar1">Leerjaar 1</option>
+        <option value="leerjaar2">Leerjaar 2</option>
+        <option value="leerjaar3">Leerjaar 3</option>
+        <option value="leerjaar4">Leerjaar 4</option>
+    </select>
+
+    <div id="overzichtblokken">
+        <div id="overzichtblokkenrow">
+            <div id="periode1" class="periode">
+                @{
+                    string naam = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID WHERE period=1";
+                    dynamic vakken = db.Query(naam, studieID);
+                }
+                <div class="cellcontainer">
+                    <div class="titelvak1"><h2>Periode 1</h2></div>
+                    <table>
+                        @foreach (dynamic vak in vakken)
+                        {
+                            <tr class="vak">
+                                <td>
+                                    @switch (int.Parse(vak["status"].ToString()))
+                                    {
+                                        case 0:
+                                            <img src="~/css/kruisje.jpg" />
+                                            break;
+                                        case 1:
+                                            <img src="~/css/lopend.jpg" />
+                                            break;
+                                        case 2:
+                                            <img src="~/css/vinkje.jpg" />
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    @vak["naam"]
+                                </td>
+
+
+
+                            </tr>
+                        }
+
+
+                    </table>
+                </div>
+
+            </div>
+            <div id="periode2" class="periode">
+                @{
+                    string naam2 = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID WHERE period=2";
+                    dynamic vakken2 = db.Query(naam2, studieID);
+                }
+                <div class="cellcontainer">
+                    <div class="titelvak1"><h2>Periode 2</h2></div>
+                    <table>
+                        @foreach (dynamic vak in vakken2)
+                        {
+                            <tr class="vak">
+                                <td>
+                                    @switch (int.Parse(vak["status"].ToString()))
+                                    {
+                                        case 0:
+                                            <img src="~/css/kruisje.jpg" />
+                                            break;
+                                        case 1:
+                                            <img src="~/css/lopend.jpg" />
+                                            break;
+                                        case 2:
+                                            <img src="~/css/vinkje.jpg" />
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    @vak["naam"]
+                                </td>
+
+
+
+                            </tr>
+                        }
+
+
+                    </table>
+                </div>
+            </div>
+            <div id="periode3" class="periode">
+                @{
+                    string naam3 = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID WHERE period=3";
+                    dynamic vakken3 = db.Query(naam3, studieID);
+                }
+                <div class="cellcontainer">
+                    <div class="titelvak1"><h2>Periode 3</h2></div>
+                    <table>
+                        @foreach (dynamic vak in vakken3)
+                        {
+                            <tr class="vak">
+                                <td>
+                                    @switch (int.Parse(vak["status"].ToString()))
+                                    {
+                                        case 0:
+                                            <img src="~/css/kruisje.jpg" />
+                                            break;
+                                        case 1:
+                                            <img src="~/css/lopend.jpg" />
+                                            break;
+                                        case 2:
+                                            <img src="~/css/vinkje.jpg" />
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    @vak["naam"]
+                                </td>
+
+
+
+                            </tr>
+                        }
+
+
+                    </table>
+                </div>
+            </div>
+            <div id="periode4" class="periode">
+                @{
+                    string naam4 = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID WHERE period=4";
+                    dynamic vakken4 = db.Query(naam4, studieID);
+                }
+                <div class="cellcontainer">
+                    <div class="titelvak1"><h2>Periode 4</h2></div>
+                    <table>
+                        @foreach (dynamic vak in vakken4)
+                        {
+                            <tr class="vak">
+                                <td>
+                                    @switch (int.Parse(vak["status"].ToString()))
+                                    {
+                                        case 0:
+                                            <img src="~/css/kruisje.jpg" />
+                                            break;
+                                        case 1:
+                                            <img src="~/css/lopend.jpg" />
+                                            break;
+                                        case 2:
+                                            <img src="~/css/vinkje.jpg" />
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    @vak["naam"]
+                                </td>
+
+
+
+                            </tr>
+                        }
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+                    }
+                    else
+                    {
+                        @RenderPage("/NotLoggedIn.cshtml")
+                    }
