@@ -1,0 +1,39 @@
+﻿@{
+    App app = new App();
+    dynamic currentuser = app.user.getUser();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="~/Includes/CSS/Global.css" type="text/css" rel="stylesheet" />
+    @RenderSection("Head", false)
+</head>
+<body>
+    <header>
+        <div class="header row">
+            <a href="~/overzicht.cshtml"><img id="homeknop" src="~/css/overzicht-homeknop.png" /></a>
+            <div class="userData_right">
+                <img src="~/css/profilepic.jpg" alt="user img" float="left" id="profilepic" />
+                <p><strong>@currentuser.firstName @currentuser.lastName</strong></p>
+                <p>@currentuser.email</p>
+                <p>@currentuser.studyName</p>
+            </div>
+        </div>
+        <select id="leerjaarkeuze">
+            <option value="leerjaar1">Leerjaar 1</option>
+            <option value="leerjaar2">Leerjaar 2</option>
+            <option value="leerjaar3">Leerjaar 3</option>
+            <option value="leerjaar4">Leerjaar 4</option>
+        </select>
+        <nav>
+            @RenderSection("Nav", true)
+        </nav>
+    </header>
+    <main>
+        @RenderSection("Main", true)
+    </main>
+</body>
+</html>
+@RenderBody()
