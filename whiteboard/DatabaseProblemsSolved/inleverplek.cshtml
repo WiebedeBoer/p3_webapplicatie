@@ -1,42 +1,48 @@
 ﻿@using WebMatrix.Data;
 @{
-    Database db = Database.Open("TodoDbCntStrng");
-    int userID = Convert.ToInt32(Session["id"]);
+    App app = new App();
 }
-<!DOCTYPE html>
-<html>
-<head>
-    RenderPage("head.cshtml")
-</head>
-<body>
-    <header>
-        RenderPage("menu.cshtml")
-    </header>
-    <main>
+
+
+@if (app.user.IsLoggedIn())
+{
+    Layout = "~/_layout.cshtml";
+    Database db = app.db;
+
+    dynamic currentuser = app.user.getUser();
+    //int usersoort = int.Parse(currentuser["userType"].ToString());
+    //int userID = Convert.ToInt32(Session["id"]);
+
+    @section Head {
+        <!--link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" /-->
+        <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle_oudje.css" />
+    }
+    @section Nav {
+
+    }
+    @section Main
+    {
         @{
             string Citem = Request.QueryString["type"];
 
             if (IsPost)
             {
-
-                string inleveren = "<form action=\"uploads.cshtml\" method=\"post\" enctype=\"multipart/form-data\"> <label for=\"file\">Bestand:</label><input type =\"file\" name =\"file\" id =\"file\" />  <input type =\"submit\" name =\"submit\" value =\"upload\" />";
                 int CoItem = Convert.ToInt32(Citem);
+                string inleveren = "<form action=\"uploads.cshtml?opdracht="+@Citem+"\" method=\"post\" enctype=\"multipart/form-data\"><label for=\"file\">Bestand:</label><input type=\"file\" name=\"file\" id=\"file\" />  <input type=\"submit\" name=\"submit\" value=\"upload\" />";
+
                 var updCommand = "UPDATE course_items SET desription = @0 WHERE Id =@1";
                 db.Execute(updCommand, inleveren, CoItem);
+                <p>inleverplek aangemaakt</p>
             }
             else
             {
                 <h2>Inleverplek Aanmaken</h2>
-                            <form action="~/inleverplek.cshtml" method="post">
-                                <input type="hidden" value="@Citem" />
-                                <input type="submit" value="maak inleverplek" />
-                            </form>
+                <form action="~/inleverplek.cshtml" method="post">
+                    <input type="hidden" value="@Citem" />
+                    <input type="submit" value="maak inleverplek" />
+                </form>
             }
-
         }
-    </main>
-    <footer>
-        RenderPage("footer.cshtml")
-    </footer>
-</body>
-</html>
+    }
+
+            }
