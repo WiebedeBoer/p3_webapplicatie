@@ -60,7 +60,7 @@ CREATE TABLE [dbo].[course_items] (
     [type]        VARCHAR(50) NOT NULL,
     [timeAdded]  DateTime NOT NULL,
     [deadline]  DateTime  NULL,
-	[timeAddedvisible]  TINYINT NOT NULL,
+    [timeAddedVisible]  TINYINT NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
