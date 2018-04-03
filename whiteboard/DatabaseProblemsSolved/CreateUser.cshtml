@@ -6,14 +6,13 @@
     Layout = "~/_layout.cshtml";
 
     @section Head {
-        <link href="~/Includes/CSS/CreateUser.css" rel="stylesheet" />
         <script src="~/Includes/JS/CreateUser.js"></script>
     }
     @section Nav {
         <a href="~/enroll.cshtml">enroll</a>
     }
     @section Main {
-            <table id="createusertable">
+            <table>
                 <tr>
                     <td>Voornaam: </td>
                     <td><input id="firstname" type="text" /></td>
@@ -61,7 +60,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><a onclick="createNew();" class="waves-effect waves-light btn">Aanmaken</a></td>
+                    <td><button onclick="createNew();">Aanmaken</button></td>
                 </tr>
                 </table>
 }
@@ -69,4 +68,4 @@
 else
 {
     @RenderPage("/NotLoggedIn.cshtml");
-}-
+}

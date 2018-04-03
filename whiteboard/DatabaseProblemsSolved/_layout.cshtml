@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8"
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link href="~/Includes/CSS/Global.css" type="text/css" rel="stylesheet" />
@@ -13,24 +14,36 @@
 <body>
     <header>
         <div class="header row">
-            <a href="~/overzicht.cshtml"><img id="homeknop" src="~/css/overzicht-homeknop.png" /></a>
-            <div id="nav">
+            <a href="/overzicht.cshtml" class="column"><img id="homeknop" src="/css/overzicht-homeknop.png"></a>
+            <div id="nav" class="column">
                 @RenderSection("Nav", true)
+                <select id="leerjaarkeuze">
+                    <option value="leerjaar1">Leerjaar 1</option>
+                    <option value="leerjaar2">Leerjaar 2</option>
+                    <option value="leerjaar3">Leerjaar 3</option>
+                    <option value="leerjaar4">Leerjaar 4</option>
+                </select>
             </div>
-            <select id="leerjaarkeuze">
-                <option value="leerjaar1">Leerjaar 1</option>
-                <option value="leerjaar2">Leerjaar 2</option>
-                <option value="leerjaar3">Leerjaar 3</option>
-                <option value="leerjaar4">Leerjaar 4</option>
-            </select>
-            <div id="userData_right">
-                <img src="~/css/profilepic.jpg" alt="user img" float="left" id="profilepic" />
-                <p><strong>@currentuser.firstName @currentuser.lastName</strong></p>
-                <p>@currentuser.email</p>
-                <p>@currentuser.studyName</p>
+            <div id="userData_right" class="column">
+                <table align="right">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="~/css/profilepic.jpg" alt="user img" id="profilepic" />
+                            </td>
+                            <td>
+                                <p><strong>@currentuser.firstName @currentuser.lastName</strong></p>
+                                <p>@currentuser.email</p>
+                                @if (currentuser["studieID"] != null)
+                                {
+                                    <p>@currentuser.studyName</p>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-
     </header>
     <main>
         @RenderSection("Main", true)

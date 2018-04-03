@@ -45,6 +45,9 @@
                                         Response.Write(app.user.LogIn(Request.Form["email"], Request.Form["pass"]));
                                     }
                                     break;
+                                case "loginpage":
+                                    Response.Write(RenderPage("/NotLoggedIn.cshtml"));
+                                    break;
                             }
                             break;
                         case "Overview":
@@ -54,9 +57,16 @@
                                     break;
                             }
                             break;
+                        default:
+                            Response.Write("Failed!");
+                            break;
                     }
                 }
             }
         }
+    }
+    else
+    {
+                                    Response.Write("Failed!");
     }
 }

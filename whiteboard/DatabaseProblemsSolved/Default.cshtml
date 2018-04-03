@@ -1,8 +1,7 @@
 ﻿@{
     App app = new App();
 }
-<!DOCTYPE html>
-<html>
+
 @if (app.user.IsLoggedIn())
 {
     @RenderPage("/Overzicht.cshtml")
@@ -11,4 +10,3 @@ else
 {
     @RenderPage("/NotLoggedIn.cshtml")
 }
-</html>
