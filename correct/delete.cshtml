@@ -1,0 +1,25 @@
+﻿@using WebMatrix.Data;
+@{
+    Database db = Database.Open("ToDoDbCntStrng");
+
+
+
+    if (Request.QueryString["type"] == "item")
+    {
+        string removeSub = Request.QueryString["remove"];
+
+        db.Execute("DELETE FROM course_items WHERE Id=@0", removeSub);
+        Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
+    }
+    else if (Request.QueryString["type"] == "sub")
+    { // moet folder id verwijderen
+        string removeSub = Request.QueryString["remove"];
+        string remove = Request.QueryString["sub"];
+
+        db.Execute("DELETE FROM course_items WHERE CourseID=@0", remove);
+        db.Execute("DELETE FROM courses WHERE Id=@0", remove);
+        db.Execute("DELETE FROM subcourses WHERE Id=@0", removeSub);
+        Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
+    }
+
+}

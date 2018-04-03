@@ -1,0 +1,23 @@
+﻿@using WebMatrix.Data;
+@{
+    Database db = Database.Open("ToDoDbCntStrng");
+    var data = db.QuerySingle("SELECT naam, description, filename FROM course_items WHERE Id=@0", Request.QueryString["item"]);
+
+    if (IsPost)
+    {
+        db.Execute("UPDATE course_items SET naam=@0, description=@1 WHERE id=@2", Request.Form["title"], Request.Form["textfield"], Request.QueryString["item"]);
+        Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
+    }
+}
+
+<div class='itemCourse'>
+    <form method='post'>
+        <div class='input-field'>
+            <label for='title'>Titel</label>
+            <input type='text' name='title' value="@data.naam" />
+        </div>
+        <textarea name="textfield">@data.description</textarea>
+
+        <input class='btn' type='submit' name='submit' value='Submit' />
+    </form>
+</div>
