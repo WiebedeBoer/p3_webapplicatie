@@ -1,40 +1,38 @@
 ﻿@using WebMatrix.Data;
 @{
     App app = new App();
-    // Database db = Database.Open("TodoDbCntStrng");
-
 }
 
 @if (app.user.IsLoggedIn())
 {
-    Database db = app.db;
     if (IsPost)
     {
-        if (Request.Form["width"] != null && Request.Form["height"] != null)
-        {
-            string width = Request.Form["width"];
-            string height = Request.Form["height"];
-            string title = Request.Form["title"];
-            string link = Request.Form["link"];
-            string text = $"<iframe src='{link}' width='{width}' height='{height}'></iframe>";
-            db.Execute("INSERT INTO course_items (naam, courseID, description) VALUES (@0, @1, @2)", title, Request.QueryString["id"], text);
-            Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
-        }
+        string width = Request.QueryString["width"];
+        string height = Request.QueryString["height"];
+        string title = Request.Form["title"];
+
+
     }
 }
-<head>
-    <title>Bruidsschat</title>
+@section Head
+    {
+
     <meta charset="utf-8" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed|Crete+Round" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="~/css/materialize.min.css" />
-    <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />
+   <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed|Crete+Round" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="~/css/style.css" />
 
     <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/js/materialize.min.js"></script>
     <script type="text/javascript" src="~/js/JavaScript.js"></script>
-</head>
-<body>
+}
+
+@section Nav
+    {
+    <a href="~/enroll.cshtml">Enroll</a>
+}
+
+@section Main{
     <div class="row">
         <div class="contentAdd col l2">
             <a href="~/Item.cshtml?item=text" class="addText unselectable">
@@ -54,20 +52,21 @@
             </a>
         </div>
         <div class="contentCourse col l10">
-            <form method="POST">
-                <input class="iframeWidth" type="number" name="width" min="100" max="1500" placeholder="Breedte" />
-                <input class="iframeHeight" type="number" name="height" min="100" max="1000" placeholder="Hoogte" />
-                <input type="hidden" name="title" value="@Request.Form["title"]" />
-                <input type="hidden" name="link" value="@Request.Form["link"]" />
-                <input class="btn" type="submit" name="submitFinal" value="Sla op" />
+            <form method="get">
+                <input class="iframeWidth" type="text" name="width" placeholder="Breedte" />
+                <input class="iframeHeight" type="text" name="heigth" placeholder="Hoogte" />
+                <input class="btn" type="submit" name="submit" value="Sla op" />
             </form>
             <div class="iframeWrapper">
                 <iframe style="border: 1px solid black" class="iframeDat" src="@Request.Form["link"]"></iframe>
             </div>
         </div>
     </div>
-</body>
+
 }
-else {
+
+}
+else
+{
 @RenderPage("/NotLoggedIn.cshtml")
 }
