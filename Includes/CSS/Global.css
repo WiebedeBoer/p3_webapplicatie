@@ -1,0 +1,116 @@
+﻿a {
+    color:aliceblue;
+}
+
+* {
+    font-family: Verdana, Geneva, sans-serif !important;
+    color: white;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+body {
+    background-image: url('/Includes/images/overzicht-wallpaper.jpg');
+    background-repeat: repeat-y;
+    background-size: cover;
+    overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+select, option {
+    color: black;
+}
+
+nav {
+    width: 25vw;
+    background: transparent;
+    float: left;
+}
+
+header option, header a, header p {
+    color: black;
+}
+
+select {
+    display: inline-block !important;
+    width: 140px;
+    font-size: 20px;
+    height: 20%;
+}
+
+    select > option {
+        color: black;
+    }
+
+header {
+    display: table;
+    height: 185px;
+    width: 100vw;
+}
+
+    header .row {
+        display: table-row;
+    }
+
+.column {
+    display: table-cell;
+    position: relative;
+    vertical-align: middle;
+}
+
+#nav {
+    float: left;
+    margin-top: 82.5px;
+}
+
+.userData * {
+    display: contents;
+}
+
+header a {
+    float: left;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+#homeknop {
+    margin-right: 20px;
+}
+
+
+div#userData_right {
+    font-family: Arial, Helvetica, sans-serif;
+    right: 2vw;
+    padding-right:27px;
+}
+
+    div#userData_right table {
+        width: 60px;
+        border: 2px solid black;
+    }
+
+        div#userData_right table tr td {
+            background: white;
+            color: black;
+            height: 100px;
+        }
+
+img#profilepic {
+    height: 100px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+div#userData_right p, #userData_right strong {
+    color: black;
+    line-height: 1;
+}
+
+header #nav a {
+    background-color: darkred;
+    color: white;
+    border: 2px solid white;
+    text-align: center;
+    padding: 2.5px 15px;
+}
