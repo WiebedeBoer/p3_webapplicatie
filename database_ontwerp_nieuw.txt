@@ -84,6 +84,13 @@ CREATE TABLE [dbo].[opdrachten] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+CREATE TABLE [dbo].[opdracht_course]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
+    [naam] VARCHAR(50) NOT NULL, 
+    [courseID] INT NOT NULL
+);
+
 CREATE TABLE [dbo].[becijfering] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
     [usertype]   NVARCHAR (20) NOT NULL,
