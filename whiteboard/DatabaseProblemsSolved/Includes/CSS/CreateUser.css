@@ -1,0 +1,12 @@
+﻿body {
+}
+
+#createusertable {
+    width: 50vw;
+    left: 25vw;
+    position: relative;
+}
+
+td {
+    padding: 5px;
+}

@@ -1,0 +1,74 @@
+﻿* {
+    font-family: Verdana, Geneva, sans-serif !important;
+    color: white;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+body {
+    background-image: url('/Includes/images/overzicht-wallpaper.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+nav {
+    width: 25vw;
+    background: transparent;
+    float: left;
+}
+
+select {
+    float: right;
+    display: inline-block !important;
+    width: 140px;
+    color: black;
+    font-size: 80%;
+    height: 100%;
+}
+
+    select > option {
+        color: black;
+    }
+
+.header {
+    height: 185px;
+}
+
+.userData * {
+    display: contents;
+}
+
+header a {
+    float: left;
+}
+
+
+img#profilepic {
+    float: left;
+    max-height: 80%;
+    max-width: 100%;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+div.userData_right {
+    margin-right: 50px;
+    background-color: white;
+    float: right;
+    color: black;
+    border: 2px solid;
+    width: 350px;
+    height: 130px;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 10px;
+}
+
+    div.userData_right p, .userData_right strong {
+        color: black;
+        line-height: 1;
+    }

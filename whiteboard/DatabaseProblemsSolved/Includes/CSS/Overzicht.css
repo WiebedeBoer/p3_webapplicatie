@@ -1,0 +1,66 @@
+﻿*{
+    color: black;
+}
+.vak img {
+    max-height: 50%;
+    max-width: 35%;
+    float: right;
+}
+
+.vak {
+    font-size: 2.5vh;
+}
+
+div.overzichtblokken {
+    margin-left: 150px;
+    margin-top: 100px;
+    padding: 0px;
+    height: 750px;
+    width: 1400px;
+    border: 3px;
+}
+
+div.vak {
+    text-align: left;
+    height: 45px;
+    padding-top: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16pt
+}
+
+div.periode {
+    text-align: center;
+    display: table-cell;
+    height: 740px;
+    /*! background-color:white; */
+}
+
+.cellcontainer {
+    margin: 0 auto;
+    width: 350px;
+    background: white;
+    height: 550px;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.vak td {
+    width: 275px;
+}
+
+#overzichtblokken {
+    display: table;
+    width: 100vw;
+}
+
+#overzichtblokkenrow {
+    display: table-row;
+}
+
+div#periodesOverzicht {
+    margin-left: 150px;
+    width: 1700px;
+    height: 725px;
+    text-align: left;
+}
+

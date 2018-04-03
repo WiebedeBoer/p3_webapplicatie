@@ -1,5 +1,23 @@
-﻿body {
+﻿* {
+    font-family: Verdana, Geneva, sans-serif !important;
+    color: white;
+    font-size: 18px;
+    line-height: 1.5;
 }
+
+body {
+    background-image: url('/Includes/images/overzicht-wallpaper.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+#errormessages > ul > li {
+    color: red;
+}
+
 .btn, .btn-large, .btn-small {
     text-decoration: none;
     color: #fff;
