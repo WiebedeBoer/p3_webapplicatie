@@ -72,16 +72,15 @@ CREATE TABLE [dbo].[enrolled] (
 );
 
 CREATE TABLE [dbo].[opdrachten] (
-    [Id]        INT           IDENTITY (1, 1) NOT NULL,
-    [CourseID]  INT           NOT NULL,
-	[UserId]    INT           NOT NULL,
-    [usertype]   TINYINT NOT NULL,
-    [cijfer]    INT           NOT NULL DEFAULT 0,
-    [status]    TINYINT          NULL,
-    [deadline]  DATETIME      NULL,
+    [Id]       INT      IDENTITY (1, 1) NOT NULL,
+    [ItemID] INT      NOT NULL,
+    [UserId]   INT      NOT NULL,
+    [usertype] TINYINT  NOT NULL,
+    [cijfer]   INT      DEFAULT ((0)) NOT NULL,
+    [status]   TINYINT  NULL,
+    [submitted] DATETIME NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
 
 CREATE TABLE [dbo].[becijfering] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
