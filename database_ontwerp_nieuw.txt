@@ -73,10 +73,10 @@ CREATE TABLE [dbo].[enrolled] (
 
 CREATE TABLE [dbo].[opdrachten] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
-    [usertype]   NVARCHAR (20) NOT NULL,
     [CourseID]  INT           NOT NULL,
+	[UserId]    INT           NOT NULL,
+    [usertype]   TINYINT NOT NULL,
     [cijfer]    INT           NOT NULL DEFAULT 0,
-    [UserId]    INT           NOT NULL,
     [status]    TINYINT          NULL,
     [deadline]  DATETIME      NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
