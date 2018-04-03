@@ -1,0 +1,162 @@
+﻿@using WebMatrix.Data;
+@*@using Microsoft.Web.Helpers;*@
+@{
+    App app = new App();
+}
+
+@if (app.user.IsLoggedIn())
+{
+    Layout = "~/_layout.cshtml";
+    Database db = app.db;
+    dynamic currentuser = app.user.getUser();
+    int userID = int.Parse(currentuser["Id"].ToString());
+    var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
+    int studieID = Convert.ToInt32(vstudieID);
+
+    var fileName = "";
+
+    if (IsPost)
+    {
+        if (Request.QueryString["item"] == "text")
+        {
+            string title = Request.Form["title"];
+            string text = Request.Form["textfield"];
+
+            if (Request.QueryString["type"] == "sub")
+            {
+                db.Execute("INSERT INTO course_items (naam, courseID, description) VALUES (@0, @1, @2)", title, Request.QueryString["id"], text);
+            }
+            else
+            {
+                db.Execute("INSERT INTO course_items (naam, courseID, description) VALUES (@0, @1, @2)", title, Request.QueryString["id"], text);
+            }
+            Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
+        }
+        else if (Request.QueryString["item"] == "file")
+        {
+            var fileSavePath = "";
+            var uploadedFile = Request.Files[0];
+            fileName = Path.GetFileName(uploadedFile.FileName);
+            fileSavePath = Server.MapPath("~/images/" +
+              fileName);
+            uploadedFile.SaveAs(fileSavePath);
+            File.Move(uploadedFile.FileName, fileSavePath.ToString());
+
+            string title = Request.Form["title"];
+            string text = Request.Form["textfield"];
+            string fname = fileSavePath;
+            db.Execute("INSERT INTO course_items (naam, courseID, filename, description) VALUES (@0, @1, @2, @3)", title, Request.QueryString["id"], fname, text);
+            Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
+        }
+        else if (Request.QueryString["item"] == "folder")
+        {
+            string foldername = Request.Form["foldername"];
+
+            var data = db.QuerySingle("SELECT id, period, studieID, priority FROM courses WHERE Id = @0", Request.QueryString["id"]);
+
+            db.Execute("INSERT INTO courses (naam, period, studieID, priority, subfolder, maincourseID) VALUES (@0, @1, @2, @3, @4, @5)", foldername, data.period, data.studieID, data.priority, 1, data.Id);
+            var id = db.QuerySingle("SELECT id FROM courses WHERE maincourseID=@0 AND naam=@1", data.Id, foldername); // id
+            db.Execute("INSERT INTO subcourses (naam, courseID, subcourseID) VALUES (@0, @1, @2)", foldername, data.Id, id.id);
+
+
+            Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
+        }
+    }
+
+
+
+    @section Head
+    {
+        <meta charset="utf-8" />
+        <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed|Crete+Round" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Global.css" />
+        <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="~/js/materialize.min.js"></script>
+        <script type="text/javascript" src="~/js/JavaScript.js"></script>
+    }
+
+    @section Nav
+    {
+        <a href="~/enroll.cshtml">Enroll</a>
+    }
+
+    @section Main{
+        <div class="row">
+            <div class="contentAdd col l2">
+                @RenderPage("sidebar.cshtml")
+            </div>
+            <div class="contentCourse col l10">
+                @if (Request.QueryString["item"] == "text")
+                {
+                    <div class='itemCourse'>
+                        <form method='post'>
+                            <div class='input-field'>
+                                <label for='title'>Titel</label>
+                                <input type='text' name='title' />
+                            </div>
+                            <textarea name="textfield"></textarea>
+
+                            <input class='btn' type='submit' name='submit' value='Submit' />
+                        </form>
+                    </div>
+                }
+                else if (Request.QueryString["item"] == "file")
+                {
+                    //FileUpload.GetHtml(initialNumberOfFiles: 1,
+                    //    allowMoreFilesToBeAdded: false,
+                    //    includeFormTag: true,
+                    //    uploadText: "Upload");
+
+                    <div class='itemCourse'>
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class='input-field'>
+                                <label for='title'>Titel</label>
+                                <input type='text' name='title' />
+                            </div>
+                            <input type="file" name="Image" />
+                            <p>Extra informatie</p>
+                            <textarea name="textfield"></textarea>
+                            <input class="btn" type="submit" name="submit" value="Submit" />
+                        </form>
+                    </div>
+                }
+                else if (Request.QueryString["item"] == "iframe")
+                {
+                    <div class='itemCourse'>
+                        <form action="~/Create.cshtml?id=@Request.QueryString["id"]" method="POST">
+                            <div class='input-field'>
+                                <label for='title'>Titel</label>
+                                <input type='text' name='title' />
+                            </div>
+                            <div class='input-field'>
+                                <label for='link'>Link</label>
+                                <input class="linkTxt" type="text" name="link" />
+                            </div>
+
+                            <input class="btn" type="submit" name="submit" value="Submit" />
+                        </form>
+                    </div>
+                }
+                else if (Request.QueryString["item"] == "folder")
+                {
+                    <div class='itemCourse'>
+                        <form method="POST">
+                            <div class='input-field'>
+                                <label for='title'>Naam</label>
+                                <input type='text' name='foldername' />
+                            </div>
+
+                            <input class="btn" type="submit" name="submit" value="Submit" />
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    @RenderPage("/NotLoggedIn.cshtml")
+}

@@ -1,0 +1,49 @@
+﻿@using WebMatrix.Data;
+@{
+    App app = new App();
+}
+
+@if (app.user.IsLoggedIn())
+{
+    Layout = "~/_layout.cshtml";
+    Database db = app.db;
+    dynamic currentuser = app.user.getUser();
+    int userID = int.Parse(currentuser["Id"].ToString());
+    var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
+    int studieID = Convert.ToInt32(vstudieID);
+
+    var data = db.QuerySingle("SELECT naam, description, filename FROM course_items WHERE Id=@0", Request.QueryString["item"]);
+
+    if (IsPost)
+    {
+        db.Execute("UPDATE course_items SET naam=@0, description=@1 WHERE id=@2", Request.Form["title"], Request.Form["textfield"], Request.QueryString["item"]);
+        Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
+    }
+
+    @section Head
+    {
+        <!--link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" /-->
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Global.css" />
+    }
+
+    @section Nav
+    {
+        <a href="~/enroll.cshtml">Enroll</a>
+    }
+
+    @section Main{
+
+        <div class='itemCourse'>
+            <form method='post'>
+                <div class='input-field'>
+                    <label for='title'>Titel</label>
+                    <input type='text' name='title' value="@data.naam" />
+                </div>
+                <textarea name="textfield">@data.description</textarea>
+
+                <input class='btn' type='submit' name='submit' value='Submit' />
+            </form>
+        </div>
+    }
+}
