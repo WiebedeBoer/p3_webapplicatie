@@ -57,6 +57,7 @@ CREATE TABLE [dbo].[course_items] (
     [description] TEXT          NULL,
     [priority]  INT           NOT NULL,
     [filename]    VARCHAR (255) NULL,
+    [type]        VARCHAR(50) NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
