@@ -58,10 +58,11 @@ CREATE TABLE [dbo].[course_items] (
     [priority]  INT           NOT NULL,
     [filename]    VARCHAR (255) NULL,
     [type]        VARCHAR(50) NOT NULL,
+    [timeAdded]  DateTime NOT NULL,
+    [deadline]  DateTime  NULL,
+	[timeAddedvisible]  TINYINT NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
-
 
 CREATE TABLE [dbo].[enrolled] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
