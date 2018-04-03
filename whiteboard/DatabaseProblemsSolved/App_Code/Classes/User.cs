@@ -9,15 +9,32 @@ using WebMatrix.Data;
 
 
 /// <summary>
-/// Summary description for User
+/// User class aanmaken
 /// </summary>
 public class User
 {
+    /// <summary>
+    /// Database
+    /// </summary>
     private Database db;
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="db">De database connectie</param>
     public User(Database db)
     {
         this.db = db;
     }
+    /// <summary>
+    /// Registreer een gebruiker
+    /// </summary>
+    /// <param name="firstName">Voornaam</param>
+    /// <param name="lastName">Achternaam</param>
+    /// <param name="email">E-mail</param>
+    /// <param name="pass">Wachtwoord</param>
+    /// <param name="activated">Geactiveerd</param>
+    /// <param name="studieid">StudieID</param>
+    /// <returns>Error of succesvol</returns>
     public string RegisterUser(string firstName, string lastName, string email, string pass, int activated, int studieid)
     {
         try
@@ -32,7 +49,8 @@ public class User
                 {
 
                     string query2 = "INSERT INTO users (firstname, lastname, email, password, status, studieID) VALUES (@0, @1, @2, @3, @4, @5)";
-                    db.Execute(query2, firstName, lastName, email.ToLower(), BCrypt.Net.BCrypt.HashPassword(pass), activated, studieid);
+                    int userid = int.Parse(db.QueryValue(query2, firstName, lastName, email.ToLower(), BCrypt.Net.BCrypt.HashPassword(pass), activated, studieid));
+                    db.Query("INSERT INTO enrolled (userType, CourseID, UserID, status) SELECT @0, Id, @1, @2 FROM courses WHERE studieID=@3", 0, userid, 0, studieid);
                     return "Success!";
                 }
                 else
@@ -50,6 +68,19 @@ public class User
             return e.ToString();
         }
     }
+    public string GetUserType(int type)
+    {
+        switch (type)
+        {
+            case 0:
+                return "Student";
+            case 1:
+                return "Docent";
+            case 2:
+                return "Admin";
+        }
+        return "";
+    }
     public string RegisterAdmin(string firstName, string lastName, string email, string pass, int permission, int activated, int studieID)
     {
         EmailAddressAttribute evalidator = new EmailAddressAttribute();
@@ -60,8 +91,6 @@ public class User
             dynamic result = db.Query(query1, email.ToLower());
             if (result.Count == 0)
             {
-
-
                 if (studieID == 0)
                 {
                     string query2 = "INSERT INTO admins (firstname, lastname, email, password, usertype, status) VALUES (@0, @1, @2, @3, @4, @5)";
@@ -69,8 +98,9 @@ public class User
                 }
                 else
                 {
-                    string query2 = "INSERT INTO admins (firstname, lastname, email, password, usertype, studieID, status) VALUES (@0, @1, @2, @3, @4, @5, @6)";
-                    db.Execute(query2, firstName, lastName, email.ToLower(), BCrypt.Net.BCrypt.HashPassword(pass), permission, studieID, activated);
+                    string query2 = "INSERT INTO admins (firstname, lastname, email, password, usertype, studieID, status) OUTPUT Inserted.Id VALUES (@0, @1, @2, @3, @4, @5, @6)";
+                    int userid = int.Parse(db.QueryValue(query2, firstName, lastName, email.ToLower(), BCrypt.Net.BCrypt.HashPassword(pass), permission, studieID, activated).ToString());
+                    db.Query("INSERT INTO enrolled (userType, CourseID, UserID, status) SELECT @0, Id, @1, @2 FROM courses WHERE studieID=@3", permission, userid, 0, studieID);
                 }
 
                 return "Success!";
@@ -158,15 +188,21 @@ public class User
             {
                 string query1;
                 if (email.Split('@')[1] == "nhl.nl")
-                    query1 = "SELECT admins.Id AS Id, firstName, lastName, email, usertype, studieID, status, studies.naam AS studyName FROM admins INNER JOIN studies ON admins.studieID=studies.Id WHERE users.Id=@0";
+                    query1 = "SELECT admins.Id AS Id, firstName, lastName, email, usertype, studieID, status, studies.naam AS studyName, usertype FROM admins INNER JOIN studies ON admins.studieID=studies.Id WHERE admins.Id=@0";
                 else
-                    query1 = "SELECT users.Id AS Id, firstName, lastName, email, studieID, status, studies.naam AS studyName FROM users INNER JOIN studies ON users.studieID=studies.Id WHERE users.Id=@0";
+                    query1 = "SELECT users.Id AS Id, firstName, lastName, email, studieID, status, studies.naam AS studyName, 0 AS usertype FROM users INNER JOIN studies ON users.studieID=studies.Id WHERE users.Id=@0";
                 dynamic result = db.Query(query1, uid);
+                if (result.Count == 0)
+                {
+                    if (email.Split('@')[1] == "nhl.nl")
+                        query1 = "SELECT Id, firstName, lastName, email, usertype, studieID, status, usertype FROM admins WHERE users.Id=@0";
+                    else
+                        query1 = "SELECT Id, firstName, lastName, email, studieID, status AS studyName, 0 AS usertype FROM users WHERE users.Id=@0";
+                }
                 return result[0];
             }
-            } 
-       throw new ArgumentException("User is not logged in!");
-
+        }
+        return "Failed!";
     }
 }
 
