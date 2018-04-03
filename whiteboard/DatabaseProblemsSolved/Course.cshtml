@@ -1,18 +1,23 @@
 ﻿@using WebMatrix.Data;
 @{
     App app = new App();
-    // Database db = Database.Open("TodoDbCntStrng");
-    
 }
 
 @if (app.user.IsLoggedIn())
 {
+    Layout = "~/_layout.cshtml";
     Database db = app.db;
-    //Database db = Database.Open("ToDoDbCntStrng");
+    dynamic currentuser = app.user.getUser();
+    int userID = int.Parse(currentuser["Id"].ToString());
+    var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
+    int studieID = Convert.ToInt32(vstudieID);
 
     var content = db.Query($"SELECT * FROM course_items WHERE CourseID={Request.QueryString["id"]} ORDER BY Id desc");
+    var contentFolder = db.Query($"SELECT * FROM subcourses WHERE CourseID={Request.QueryString["id"]}");
 
-    <head>
+
+    @section Head
+    {
         <meta charset="utf-8" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed|Crete+Round" rel="stylesheet">
@@ -23,28 +28,27 @@
         <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="~/js/materialize.min.js"></script>
         <script type="text/javascript" src="~/js/JavaScript.js"></script>
-    </head>
-    <body>
+    }
+
+    @section Nav
+    {
+        <a href="~/enroll.cshtml">Enroll</a>
+    }
+
+    @section Main{
         @RenderPage("_header.cshtml")
         <div class="row">
             <div class="contentAdd col l2">
-                <a href="~/Item.cshtml?item=text&id=@Request.QueryString["id"]" class="addText unselectable">
-                    <span class="text center">
-                        <text>Klik voor text</text>
-                    </span>
-                </a>
-                <a href="~/Item.cshtml?item=file&id=@Request.QueryString["id"]" class="addFile unselectable">
-                    <span class="bestand center">
-                        <text>Klik voor een bestand</text>
-                    </span>
-                </a>
-                <a href="~/Item.cshtml?item=iframe&id=@Request.QueryString["id"]" class="addFile unselectable">
-                    <span class="bestand center">
-                        <text>Klik voor een iFrame</text>
-                    </span>
-                </a>
+                @RenderPage("sidebar.cshtml")
             </div>
             <div class="contentCourse col l10">
+                @foreach (var item in contentFolder)
+                {
+                    <div class="itemCourse">
+                        <h3><a href="~/Course.cshtml?id=@item.subcourseID">@item.naam</a></h3>
+                        <a class="remove_button" href="~/delete.cshtml?id=@Request.QueryString["id"]&remove=@item.id&sub=@item.subcourseID&type=sub" onclick="confirm('Weet u het zeker?');">X</a>
+                    </div>
+                }
                 @foreach (var item in content)
                 {
 
@@ -54,17 +58,20 @@
                         <h3>@item.naam</h3>
                         <p><a href="@f" download="@Path.GetFileName(f)">@Path.GetFileName(f)</a></p>
                         @if (t != null)
-                    {
+                        {
                             <p>@Html.Raw(t.Replace("\n", "<br />"))</p>
                         }
-
+                        <span class="buttons">
+                            <a href="~/Update.cshtml?id=@Request.QueryString["id"]&item=@item.Id">C</a>
+                            <a href="~/delete.cshtml?id=@Request.QueryString["id"]&remove=@item.id&type=item" onclick="confirm('Weet u het zeker?');">X</a>
+                        </span>
                     </div>
 
 
                 }
             </div>
         </div>
-    </body>
+    }
 }
 else
 {
