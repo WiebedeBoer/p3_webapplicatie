@@ -25,53 +25,89 @@
     @section Main{
         <div id="overzichtblokken">
             <div id="overzichtblokkenrow">
-                @for (int i = 1; i < 5; i++)
+                @if (currentuser["usertype"] == 0)
                 {
-                    <div id="periode@(i)" class="periode">
-                        @{
-                            string data = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID AND enrolled.UserId=@0 AND enrolled.usertype=@1 WHERE period=@2";
-                            dynamic courses = db.Query(data, userID, userType, i);
-                        }
-                        <div class="cellcontainer">
-                            <div class="titelvak1"><h2>Periode @i</h2></div>
-                            <table>
-                                @foreach (dynamic vak in courses)
-                                {
-                                    <tr class="vak">
-                                        <td>
-                                            @switch (int.Parse(vak["status"].ToString()))
-                                            {
-                                                case 0:
-                                                    <img src="~/css/kruisje.jpg" />
-                                                    break;
-                                                case 1:
-                                                    <img src="~/css/lopend.jpg" />
-                                                    break;
-                                                case 2:
-                                                    <img src="~/css/vinkje.jpg" />
-                                                    break;
-                                            }
-                                        </td>
-                                        <td>
-                                            <a href="~/vakkenpagina.cshtml?id=@vak.courseId">@vak["naam"]</a>
-                                        </td>
+                    for (int i = 1; i < 5; i++)
+                    {
+                        <div id="periode@(i)" class="periode">
+                            @{
+                                string data = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID AND enrolled.UserId=@0 AND enrolled.usertype=@1 WHERE period=@2";
+                                dynamic courses = db.Query(data, userID, userType, i);
+                            }
+                            <div class="cellcontainer">
+                                <div class="titelvak@(i)"><h2>Periode @i</h2></div>
+                                <table>
+                                    @foreach (dynamic vak in courses)
+                                    {
+                                        <tr class="vak">
+                                            <td>
+                                                @switch (int.Parse(vak["status"].ToString()))
+                                                {
+                                                    case 0:
+                                                        <img src="~/css/kruisje.jpg" />
+                                                        break;
+                                                    case 1:
+                                                        <img src="~/css/lopend.jpg" />
+                                                        break;
+                                                    case 2:
+                                                        <img src="~/css/vinkje.jpg" />
+                                                        break;
+                                                }
+                                            </td>
+                                            <td>
+                                                <a href="~/vakkenpagina.cshtml?id=@vak.courseId">@vak["naam"]</a>
+                                            </td>
 
 
 
-                                    </tr>
-                                }
+                                        </tr>
+                                    }
 
 
-                            </table>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    }
+
+
+                }
+                else
+                {
+                    for (int i = 1; i < 5; i++)
+                    {
+                        <div id="periode@(i)" class="periode">
+                            @{
+                                string data = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID AND enrolled.UserId=@0 AND enrolled.usertype=@1 WHERE period=@2";
+                                dynamic courses = db.Query(data, userID, userType, i);
+                            }
+                            <div class="cellcontainer">
+                                <div class="titelvak@(i)"><h2>Periode @i</h2></div>
+                                <table>
+                                    @foreach (dynamic vak in courses)
+                                    {
+                                        <tr class="vak">
+                                            <td>
+                                                <a href="~/vakkenpagina.cshtml?id=@vak.courseId">@vak["naam"]</a>
+                                            </td>
+
+
+
+                                        </tr>
+                                    }
+
+
+                                </table>
+                            </div>
+                        </div>
+                    }
+
                 }
             </div>
         </div>
-
     }
 }
 else
 {
     @RenderPage("/NotLoggedIn.cshtml")
 }
+
