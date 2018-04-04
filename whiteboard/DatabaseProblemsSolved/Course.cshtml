@@ -5,6 +5,9 @@
 
 @if (app.user.IsLoggedIn())
 {
+    var usertype = app.user.getUser();
+    int usrtp = int.Parse(usertype["usertype"].ToString());
+
     Layout = "~/_layout.cshtml";
     Database db = app.db;
     dynamic currentuser = app.user.getUser();
@@ -14,6 +17,7 @@
 
     var content = db.Query($"SELECT * FROM course_items WHERE CourseID={Request.QueryString["id"]} ORDER BY Id desc");
     var contentFolder = db.Query($"SELECT * FROM subcourses WHERE CourseID={Request.QueryString["id"]}");
+    var contentOpdracht = db.Query($"SELECT * FROM opdracht_course WHERE courseID = {Request.QueryString["id"]}");
 
 
     @section Head
@@ -22,12 +26,12 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed|Crete+Round" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="~/css/materialize.min.css" />
-        <link rel="stylesheet" type="text/css" href="~/css/style.css" />
         <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Global.css" />
 
-        <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="~/js/materialize.min.js"></script>
-        <script type="text/javascript" src="~/js/JavaScript.js"></script>
+        <script src="~/Includes/JS/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="~/Includes/JS/materialize.min.js"></script>
+        <script type="text/javascript" src="~/Includes/JS/JavaScript.js"></script>
     }
 
     @section Nav
@@ -36,17 +40,34 @@
     }
 
     @section Main{
-        @RenderPage("_header.cshtml")
         <div class="row">
             <div class="contentAdd col l2">
-                @RenderPage("sidebar.cshtml")
+                @if (usrtp != 0)
+                {
+                    @RenderPage("sidebar.cshtml")
+                }
             </div>
             <div class="contentCourse col l10">
                 @foreach (var item in contentFolder)
                 {
                     <div class="itemCourse">
                         <h3><a href="~/Course.cshtml?id=@item.subcourseID">@item.naam</a></h3>
-                        <a class="remove_button" href="~/delete.cshtml?id=@Request.QueryString["id"]&remove=@item.id&sub=@item.subcourseID&type=sub" onclick="confirm('Weet u het zeker?');">X</a>
+                        @if (usrtp != 0)
+                        {
+                            <a class="remove_button" href="~/delete.cshtml?id=@Request.QueryString["id"]&remove=@item.id&sub=@item.subcourseID&type=sub" onclick="var result = confirm('Weet u het zeker?'); if (result === false) { $('.delete').removeAttr('href'); location.reload();}">X</a>
+                        }
+
+                    </div>
+                }
+                @foreach (var item in contentOpdracht)
+                {
+                    <div class="itemCourse">
+                        <h3><a href="~/inleverplek.cshtml?id=@item.courseID">@item.naam</a></h3>
+                        @if (usrtp != 0)
+                        {
+                            <a class="remove_button delete" href="~/delete.cshtml?id=@Request.QueryString["id"]&remove=@item.id&sub=@item.courseID&type=opdr" onclick="var result = confirm('Weet u het zeker?'); if (result === false){ $('.delete').removeAttr('href'); location.reload();}">X</a>
+                        }
+
                     </div>
                 }
                 @foreach (var item in content)
@@ -61,10 +82,16 @@
                         {
                             <p>@Html.Raw(t.Replace("\n", "<br />"))</p>
                         }
-                        <span class="buttons">
-                            <a href="~/Update.cshtml?id=@Request.QueryString["id"]&item=@item.Id">C</a>
-                            <a href="~/delete.cshtml?id=@Request.QueryString["id"]&remove=@item.id&type=item" onclick="confirm('Weet u het zeker?');">X</a>
-                        </span>
+                        @if (usrtp != 0)
+                        {
+                            <span class="buttons">
+                                @if (item.type == "text" || item.type == "bestand")
+                                {
+                                    <a href="~/Update.cshtml?id=@Request.QueryString["id"]&item=@item.Id">C</a>
+                                }
+                                <a class="delete" href="~/delete.cshtml?id=@Request.QueryString["id"]&remove=@item.id&type=item" onclick="var result = confirm('Weet u het zeker?'); if (result === false){ $('.delete').removeAttr('href'); location.reload();}">X</a>
+                            </span>
+                        }
                     </div>
 
 
