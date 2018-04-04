@@ -1,0 +1,102 @@
+﻿@using WebMatrix.Data;
+@{
+    App app = new App();
+}
+
+@if (app.user.IsLoggedIn())
+{
+    Layout = "~/_layout.cshtml";
+    Database db = app.db;
+
+    dynamic currentuser = app.user.getUser();
+    int usersoort = int.Parse(currentuser["userType"].ToString());
+    int userID = int.Parse(currentuser["Id"].ToString());
+
+    string usertype = "";
+    if (usersoort == 0)
+    {
+        usertype = "student";
+    }
+    else if (usersoort == 1)
+    {
+        usertype = "docent";
+    }
+    else if (usersoort == 2)
+    {
+        usertype = "admin";
+    }
+
+    @section Head {
+        <!--link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" /-->
+
+    }
+    @section Nav {
+
+    }
+    @section Main
+    {
+        @if (usertype == "admin")
+        {
+            if (IsPost)
+            {
+                //var data = db.QuerySingle("SELECT id, period, studieID, priority FROM courses WHERE Id = @0", Request.QueryString["id"]);
+                int periode = Convert.ToInt32(Request.Form["periode"]);
+                int jaar = Convert.ToInt32(Request.Form["jaar"]);
+                int studie = Convert.ToInt32(Request.Form["studie"]);
+                string vaknaam = Convert.ToString(Request.Form["vaknaam"]);
+
+                db.Execute("INSERT INTO courses (naam, jaar, period, studieID, priority) VALUES (@0, @1, @2, @3, 1)", vaknaam, jaar, periode, studie);
+
+                var studCommand = "SELECT Id FROM users WHERE studieID =@0";
+                dynamic students = db.Query(studCommand, studie);
+
+                foreach (dynamic stud in students)
+                {
+                    db.Execute("INSERT INTO enrolled (usertype, CourseID, UserId, status, resultaat) VALUES (0, @0, @1, 0, 0)", studie, stud.Id);
+                }
+
+                var docCommand = "SELECT Id FROM admins WHERE studieID =@0";
+                dynamic docents = db.Query(docCommand, studie);
+
+                foreach (dynamic doce in docents)
+                {
+                    db.Execute("INSERT INTO enrolled (usertype, CourseID, UserId, status, resultaat) VALUES (0, @0, @1, 0, 0)", studie, doce.Id);
+                }
+
+                //var id = db.QuerySingle("SELECT id FROM courses WHERE maincourseID=@0 AND naam=@1", data.Id, foldername);
+                <p>vak @vaknaam aangemaakt</p>
+            }
+            <div>
+                <form action="~/vakmaken.cshtml" method="post">
+                    <br />periode   <select name="periode">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                    <br />jaar  <select name="jaar">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                    <br />studie   <br />periode   <select name="studie">
+                        @{
+                            var stuCommand = "SELECT Id, naam FROM studies";
+                            dynamic studies = db.Query(stuCommand);
+
+                            foreach (dynamic vak in studies)
+                            {
+                                <option value="@vak.Id">@vak.naam</option>
+                            }
+                        }
+
+                    </select>
+                    <br />vaknaam   <input type="text" name="vaknaam" />
+                    
+                </form>
+            </div>
+
+         }
+    }
+}

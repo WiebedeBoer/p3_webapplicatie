@@ -18,3 +18,13 @@
         <text>Klik voor een folder</text>
     </span>
 </a>
+<a href="~/Item.cshtml?item=opdr&id=@Request.QueryString["id"]" class="addFile unselectable">
+    <span class="bestand center">
+        <text>Klik om een opdracht aan te maken</text>
+    </span>
+</a>
+<a href="~/Grade.cshtml?id=@Request.QueryString["id"]" class="addFile unselectable">
+    <span class="bestand center">
+        <text>Klik om een opdracht te becijferen</text>
+    </span>
+</a>
