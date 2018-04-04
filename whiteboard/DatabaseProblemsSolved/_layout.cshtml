@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     App app = new App();
     dynamic currentuser = app.user.getUser();
 }
@@ -37,14 +38,16 @@
                             <td>
                                 <p><strong>@currentuser.firstName @currentuser.lastName</strong></p>
                                 <p>@currentuser.email</p>
+
                                 @if (currentuser["studieID"] != null)
                                 {
                                     <p style="display: inline">@currentuser.studyName</p>
                                 }
+                                <a class="logoutLink" href="~/logout.cshtml">
+                                    <img class="logout" src="~/Includes/Images/logout.png" alt="X" />
+                                </a>
                             </td>
-                            <a href="~/logout.cshtml">
-                                <img class="logout" src="~/Includes/Images/logout.png" alt="X" />
-                            </a>
+
                         </tr>
                     </tbody>
                 </table>
