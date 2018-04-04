@@ -1,0 +1,16 @@
+﻿@using WebMatrix.Data;
+@{
+    App app = new App();
+}
+
+@if (app.user.IsLoggedIn())
+{
+    @section Head
+    {
+
+    }
+}
+else
+{
+    @RenderPage("/NotLoggedIn.cshtml")
+}
