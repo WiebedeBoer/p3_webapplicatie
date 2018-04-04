@@ -1,0 +1,59 @@
+﻿@{
+    App app = new App();
+    dynamic currentuser = app.user.getUser();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="~/Includes/CSS/Global.css" type="text/css" rel="stylesheet" />
+    @RenderSection("Head", false)
+</head>
+<body>
+    <header>
+        <div class="header row">
+            <a href="/overzicht.cshtml" class="column"><img id="homeknop" src="/css/overzicht-homeknop.png"></a>
+            <div id="nav" class="column">
+                @RenderSection("Nav", true)
+                <form action="~/Overzicht.cshtml" get">
+                    <select name="leerjaar" id="leerjaarkeuze">
+                        <option value="1">Leerjaar 1</option>
+                        <option value="2">Leerjaar 2</option>
+                        <option value="3">Leerjaar 3</option>
+                        <option value="4">Leerjaar 4</option>
+                    </select>
+                    <input type="submit" value="switch" />
+                </form>
+            </div>
+            <div id="userData_right" class="column">
+                <table align="right">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="~/css/profilepic.jpg" alt="user img" id="profilepic" />
+                            </td>
+                            <td>
+                                <p><strong>@currentuser.firstName @currentuser.lastName</strong></p>
+                                <p>@currentuser.email</p>
+                                @if (currentuser["studieID"] != null)
+                                {
+                                    <p style="display: inline">@currentuser.studyName</p>
+                                }
+                            </td>
+                            <a href="~/logout.cshtml">
+                                <img class="logout" src="~/Includes/Images/logout.png" alt="X" />
+                            </a>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </header>
+    <main>
+        @RenderSection("Main", true)
+    </main>
+</body>
+</html>
+@RenderBody()
