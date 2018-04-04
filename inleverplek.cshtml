@@ -1,0 +1,50 @@
+﻿@using WebMatrix.Data;
+@{
+    App app = new App();
+}
+
+@if (app.user.IsLoggedIn())
+{
+    Layout = "~/_layout.cshtml";
+    Database db = app.db;
+
+    dynamic currentuser = app.user.getUser();
+    int userID = int.Parse(currentuser["Id"].ToString());
+    int userType = int.Parse(currentuser["usertype"].ToString());
+    var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
+
+    @section Head {
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />
+    }
+    @section Nav {
+        <a href="~/enroll.cshtml">Enroll</a>
+    }
+    @section Main
+    {
+
+        @{
+            string Citem = Request.QueryString["type"];
+
+            if (IsPost)
+            {
+                int CoItem = Convert.ToInt32(Citem);
+                string inleveren = "<form action=\"uploads.cshtml?opdracht="+Citem+"\" method=\"post\" enctype=\"multipart/form-data\"><label for=\"file\">Bestand:</label><input type=\"file\" name=\"file\" id=\"file\" />  <input type=\"submit\" name=\"submit\" value=\"upload\" />";
+                //string inleveren = "";
+                var updCommand = "UPDATE course_items SET description =@0 WHERE Id =@1";
+                db.Execute(updCommand, inleveren, CoItem);
+                <p>inleverplek aangemaakt</p>
+            }
+            else
+            {
+                <h2>Inleverplek Aanmaken</h2>
+                <form action="~/inleverplek.cshtml?type=@Citem" method="post">
+                    <input type="hidden" value="@Citem" />
+                    <input type="submit" value="maak inleverplek" />
+                </form>
+            }
+        }
+
+
+    }
+}
+

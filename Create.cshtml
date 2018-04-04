@@ -5,6 +5,8 @@
 
 @if (app.user.IsLoggedIn())
 {
+    DateTime timestamp = DateTime.Now;
+
     Layout = "~/_layout.cshtml";
     Database db = app.db;
     dynamic currentuser = app.user.getUser();
@@ -21,7 +23,7 @@
             string title = Request.Form["title"];
             string link = Request.Form["link"];
             string text = $"<iframe src='{link}' width='{width}' height='{height}'></iframe>";
-            db.Execute("INSERT INTO course_items (naam, courseID, description) VALUES (@0, @1, @2)", title, Request.QueryString["id"], text);
+            db.Execute("INSERT INTO course_items (naam, courseID, priority, description, type, timeAdded, timeAddedVisible) VALUES (@0, @1, @2, @3, @4, @5, @6)", title, Request.QueryString["id"], "1", text, "frame", timestamp, "0");
             Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
         }
     }
@@ -32,11 +34,12 @@
         <meta charset="utf-8" />
         <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed|Crete+Round" rel="stylesheet">
 
-        <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle.css" />
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Global.css" />
 
-        <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="~/js/materialize.min.js"></script>
-        <script type="text/javascript" src="~/js/JavaScript.js"></script>
+        <script src="~/Includes/JS/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="~/Includes/JS/materialize.min.js"></script>
+        <script type="text/javascript" src="~/Includes/JS/JavaScript.js"></script>
     }
 
     @section Nav

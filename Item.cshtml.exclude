@@ -1,4 +1,5 @@
 ﻿@using WebMatrix.Data;
+@using Microsoft.Web.Helpers;
 @{
     App app = new App();
 }
@@ -12,8 +13,6 @@
     var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
     int studieID = Convert.ToInt32(vstudieID);
 
-    DateTime timestamp = DateTime.Now;
-
     var fileName = "";
 
     if (IsPost)
@@ -25,11 +24,11 @@
 
             if (Request.QueryString["type"] == "sub")
             {
-                db.Execute("INSERT INTO course_items (naam, courseID, description, type, timeAdded, timeAddedVisible, priority) VALUES (@0, @1, @2, @3, @4, @5, @6)", title, Request.QueryString["id"], text, "text", timestamp, "0", "1");
+                db.Execute("INSERT INTO course_items (naam, courseID, description) VALUES (@0, @1, @2)", title, Request.QueryString["id"], text);
             }
             else
             {
-                db.Execute("INSERT INTO course_items (naam, courseID, description, type, timeAdded, timeAddedVisible, priority) VALUES (@0, @1, @2, @3, @4, @5, @6)", title, Request.QueryString["id"], text, "text", timestamp, "0", "1");
+                db.Execute("INSERT INTO course_items (naam, courseID, description) VALUES (@0, @1, @2)", title, Request.QueryString["id"], text);
             }
             Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
         }
@@ -46,7 +45,7 @@
             string title = Request.Form["title"];
             string text = Request.Form["textfield"];
             string fname = fileSavePath;
-            db.Execute("INSERT INTO course_items (naam, courseID, filename, description, type) VALUES (@0, @1, @2, @3, @4)", title, Request.QueryString["id"], fname, text, "file");
+            db.Execute("INSERT INTO course_items (naam, courseID, filename, description) VALUES (@0, @1, @2, @3)", title, Request.QueryString["id"], fname, text);
             Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
         }
         else if (Request.QueryString["item"] == "folder")
@@ -55,17 +54,10 @@
 
             var data = db.QuerySingle("SELECT id, period, studieID, priority FROM courses WHERE Id = @0", Request.QueryString["id"]);
 
-            db.Execute("INSERT INTO courses (naam, period, studieID, priority, subfolder, maincourseID, timeAdded, timeAddedVisible) VALUES (@0, @1, @2, @3, @4, @5, @6, @7)", foldername, data.period, data.studieID, data.priority, 1, data.Id, timestamp, "0");
-            var id = db.QuerySingle("SELECT id FROM courses WHERE maincourseID=@0 AND naam=@1", data.Id, foldername);
+            db.Execute("INSERT INTO courses (naam, period, studieID, priority, subfolder, maincourseID) VALUES (@0, @1, @2, @3, @4, @5)", foldername, data.period, data.studieID, data.priority, 1, data.Id);
+            var id = db.QuerySingle("SELECT id FROM courses WHERE maincourseID=@0 AND naam=@1", data.Id, foldername); // id
             db.Execute("INSERT INTO subcourses (naam, courseID, subcourseID) VALUES (@0, @1, @2)", foldername, data.Id, id.id);
 
-
-            Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
-        }
-        else if (Request.QueryString["item"] == "opdr")
-        {
-            string name = Request.Form["opdrname"];
-            db.Execute("INSERT INTO opdracht_course (naam, courseID) VALUES (@0, @1)", name, Request.QueryString["id"]);
 
             Response.Redirect($"~/Course.cshtml?id={Request.QueryString["id"]}");
         }
@@ -78,8 +70,8 @@
         <meta charset="utf-8" />
         <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed|Crete+Round" rel="stylesheet">
 
-        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />
-        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Global.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/style.css" />
+
         <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="~/js/materialize.min.js"></script>
         <script type="text/javascript" src="~/js/JavaScript.js"></script>
@@ -112,6 +104,10 @@
                 }
                 else if (Request.QueryString["item"] == "file")
                 {
+                    FileUpload.GetHtml(initialNumberOfFiles: 1,
+                        allowMoreFilesToBeAdded: false,
+                        includeFormTag: true,
+                        uploadText: "Upload");
 
                     <div class='itemCourse'>
                         <form method="POST" enctype="multipart/form-data">
@@ -152,23 +148,6 @@
                                 <input type='text' name='foldername' />
                             </div>
 
-                            <input class="btn" type="submit" name="submit" value="Submit" />
-                        </form>
-                    </div>
-                }
-                else if (Request.QueryString["item"] == "opdr")
-                {
-                    <div class='itemCourse'>
-                        <form method="POST">
-                            <div class='input-field'>
-                                <label for='title'>Naam</label>
-                                <input type='text' name='opdrname' />
-                            </div>
-                            <text>Wil je de tijd de het gepost is laten zien?</text>
-                            <input id="ja" type="radio" name="visible" value="1" />
-                            <label for="ja">Ja</label>
-                            <input id="nee" type="radio" name="visible" value="0" />
-                            <label for="nee">Nee</label>
                             <input class="btn" type="submit" name="submit" value="Submit" />
                         </form>
                     </div>

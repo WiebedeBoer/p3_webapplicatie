@@ -1,0 +1,72 @@
+﻿@{
+
+    if (IsPost)
+    {
+        if (!String.IsNullOrEmpty(Request.Form["module"]) && !String.IsNullOrEmpty(Request.Form["task"]))
+        {
+            App app = new App();
+
+            if (Validation.IsValid(Request.Form["module"]) && Validation.IsValid(Request.Form["task"]))
+            {
+                string module = Request.Form["module"], task = Request.Form["task"];
+                if (app.user.IsLoggedIn())
+                {
+                    switch (module)
+                    {
+                        case "user":
+                            switch (task)
+                            {
+                                case "createUser":
+                                    if (!String.IsNullOrEmpty(Request.Form["firstname"]) && !String.IsNullOrEmpty(Request.Form["lastname"]) && !String.IsNullOrEmpty(Request.Form["email"]) && !String.IsNullOrEmpty(Request.Form["password"]) && Request.Form["activated"] != null && !String.IsNullOrEmpty(Request.Form["studieID"]))
+                                    {
+                                        Response.Write(app.user.RegisterUser(Request.Form["firstname"], Request.Form["lastname"], Request.Form["email"], Request.Form["password"], int.Parse(Request.Form["activated"]), int.Parse(Request.Form["studieID"])));
+                                    }
+                                    break;
+                                case "createAdmin":
+                                    if (!String.IsNullOrEmpty(Request.Form["firstname"]) && !String.IsNullOrEmpty(Request.Form["lastname"]) && !String.IsNullOrEmpty(Request.Form["email"]) && !String.IsNullOrEmpty(Request.Form["password"]) && Request.Form["activated"] != null && !String.IsNullOrEmpty(Request.Form["userType"]))
+                                    {
+                                        Response.Write(app.user.RegisterAdmin(Request.Form["firstname"], Request.Form["lastname"], Request.Form["email"], Request.Form["password"], int.Parse(Request.Form["userType"]), int.Parse(Request.Form["activated"]), int.Parse(Request.Form["studieID"])));
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (module)
+                    {
+                        case "user":
+                            switch (task)
+                            {
+                                case "login":
+                                    if (!String.IsNullOrEmpty(Request.Form["email"]) && !String.IsNullOrEmpty(Request.Form["pass"]))
+                                    {
+                                        Response.Write(app.user.LogIn(Request.Form["email"], Request.Form["pass"]));
+                                    }
+                                    break;
+                                case "loginpage":
+                                    Response.Write(RenderPage("/NotLoggedIn.cshtml"));
+                                    break;
+                            }
+                            break;
+                        case "Overview":
+                            switch (task)
+                            {
+                                case "nhl":
+                                    break;
+                            }
+                            break;
+                        default:
+                            Response.Write("Failed!");
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+                                    Response.Write("Failed!");
+    }
+}

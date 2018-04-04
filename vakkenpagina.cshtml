@@ -1,0 +1,32 @@
+﻿@using WebMatrix.Data;
+@{
+    App app = new App();
+}
+@if (app.user.IsLoggedIn())
+{
+    Layout = "~/_layout.cshtml";
+    Database db = app.db;
+    dynamic currentuser = app.user.getUser();
+    int userID = int.Parse(currentuser["Id"].ToString());
+    var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
+    int studieID = Convert.ToInt32(vstudieID);
+
+    @section Head
+    {
+        <!--link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" /-->
+        <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle_oudje.css" />
+    }
+
+    @section Nav
+    {
+        <a href="~/enroll.cshtml">Enroll</a>
+    }
+
+    @section Main{
+
+    }
+}
+else
+{
+    @RenderPage("/NotLoggedIn.cshtml")
+}

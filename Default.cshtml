@@ -1,0 +1,12 @@
+﻿@{
+    App app = new App();
+}
+
+@if (app.user.IsLoggedIn())
+{
+    @RenderPage("/Overzicht.cshtml")
+}
+else
+{
+    @RenderPage("/NotLoggedIn.cshtml")
+}

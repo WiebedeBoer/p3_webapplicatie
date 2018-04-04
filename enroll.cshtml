@@ -10,6 +10,7 @@
 
     dynamic currentuser = app.user.getUser();
     int usersoort = int.Parse(currentuser["userType"].ToString());
+    int userID = int.Parse(currentuser["Id"].ToString());
     // string usermail = currentuser["email"].ToString();
 
     /* string usertype = "";
@@ -47,9 +48,9 @@
         @if (usertype == "student")
         {
             //dynamic currentuser = app.user.getUser();
-            int userID = int.Parse(currentuser["Id"].ToString());
+            //int userID = int.Parse(currentuser["Id"].ToString());
 
-            var vstudieID = db.QueryValue("SELECT StudieID FROM users WHERE Id=@0", userID);
+            var vstudieID = db.QueryValue("SELECT studieID FROM users WHERE Id=@0", userID);
             int studieID = Convert.ToInt32(vstudieID);
 
             var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
@@ -58,7 +59,7 @@
             if (IsPost)
             {
                 int eId = Convert.ToInt32(Request.Form["enrollen"]);
-                string gebruikerstype = "student";
+                //string gebruikerstype = "student";
 
                 var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0";
                 int CountCourse = Convert.ToInt32(db.QueryValue(CoCommand, eId));
@@ -112,11 +113,11 @@
         else
         {
             //dynamic currentuser = app.user.getUser();
-            int userID = int.Parse(currentuser["Id"].ToString());
+            //int userID = int.Parse(currentuser["Id"].ToString());
 
             //int userID = 1;
 
-            var vstudieID = db.QueryValue("SELECT StudieID FROM admins WHERE Id=@0", userID);
+            var vstudieID = db.QueryValue("SELECT studieID FROM admins WHERE Id=@0 AND usertype =0", userID);
             int studieID = Convert.ToInt32(vstudieID);
 
 
@@ -178,20 +179,21 @@
             //display enroll auto students
             var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
             var vakken = db.Query(vakCommand, userID);
+            <div>
+                <h2>Auto Enroll Students</h2>
+                <form action="~/enroll.cshtml" method="post">
+                    <input type="hidden" name="actie" value="autoenroll" />
+                    <select name="enrollen">
+                        @foreach (var recrod in vakken)
+                        {
 
-            <h2>Auto Enroll Students</h2>
-            <form action="~/enroll.cshtml" method="post">
-                <input type="hidden" name="actie" value="autoenroll" />
-                <select name="enrollen">
-                    @foreach (var recrod in vakken)
-                    {
+                            <option value="@recrod.Id">@recrod.naam</option>
 
-                        <option value="@recrod.Id">@recrod.naam</option>
-
-                    }
-                </select>
-                <input type="submit" value="auto enroll all students" class="waves-effect waves-light btn" />
-            </form>
+                        }
+                    </select>
+                    <input type="submit" value="auto enroll all students" class="waves-effect waves-light btn" />
+                </form>
+                </div>
 
             //enroll docent self
             //var vakdCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
@@ -205,24 +207,26 @@
                 var vakkCommand = "SELECT courses.Id, courses.naam AS naam FROM courses INNER JOIN enrolled ON enrolled.CourseID=courses.Id AND enrolled.UserId=@0 AND enrolled.status=0 AND enrolled.usertype=1";
                 var vakjes = db.Query(vakkCommand, userID);
 
-                <h2>Enroll Self</h2>
-                <form action="~/enroll.cshtml" method="post">
-                    <input type="hidden" name="actie" value="enrolldocent" />
-                    <select name="enrollen">
-                        @foreach (var record in vakjes)
-                        {
+                <div>
+                    <h2>Enroll Self</h2>
+                    <form action="~/enroll.cshtml" method="post">
+                        <input type="hidden" name="actie" value="enrolldocent" />
+                        <select name="enrollen">
+                            @foreach (var record in vakjes)
+                            {
 
-                            <option value="@record.Id">@record.naam</option>
+                                <option value="@record.Id">@record.naam</option>
 
-                        }
-                    </select>
-                    <input type="submit" value="enroll self" class="waves-effect waves-light btn" />
-                </form>
-            }
+                            }
+                        </select>
+                        <input type="submit" value="enroll self" class="waves-effect waves-light btn" />
+                    </form>
+                    </div>
+                    }
 
-        }
+                    }
 
-    }
-}
+                    }
+                    }
 
 

@@ -1,0 +1,26 @@
+﻿
+@using WebMatrix.Data;
+
+@{
+
+    App app = new App();
+
+}
+
+@if (app.user.IsLoggedIn())
+
+{
+
+    Session.Clear();
+
+    Response.Redirect($"~/Default.cshtml");
+
+}
+
+else
+
+{
+
+    @RenderPage("/NotLoggedIn.cshtml")
+
+}
