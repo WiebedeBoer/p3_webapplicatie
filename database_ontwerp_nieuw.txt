@@ -9,7 +9,6 @@ CREATE TABLE [dbo].[users] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-
 CREATE TABLE [dbo].[admins] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
     [firstName] TEXT          NOT NULL,
@@ -21,7 +20,13 @@ CREATE TABLE [dbo].[admins] (
     [status]    TINYINT       NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
+CREATE TABLE [dbo].[Files] (
+    [Id]            INT  IDENTITY (1, 1) NOT NULL,
+    [Name]          TEXT NOT NULL,
+    [FileExtension] TEXT NOT NULL,
+    [Path]          TEXT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
 
 CREATE TABLE [dbo].[studies] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
