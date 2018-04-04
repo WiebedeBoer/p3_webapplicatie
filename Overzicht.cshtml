@@ -32,7 +32,7 @@
                     {
                         <div id="periode@(i)" class="periode">
                             @{
-                                string data = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID AND enrolled.UserId=@0 AND enrolled.usertype=@1 WHERE period=@2 AND subfolder=0";
+                                string data = "SELECT courseID, naam, status, resultaat FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID AND enrolled.UserId=@0 AND enrolled.usertype=@1 WHERE period=@2 AND subfolder=0 AND status=1";
                                 dynamic courses = db.Query(data, userID, userType, i);
                             }
                             <div class="cellcontainer">
@@ -42,16 +42,19 @@
                                     {
                                         <tr class="vak">
                                             <td>
-                                                @switch (int.Parse(vak["status"].ToString()))
+                                                @switch (int.Parse(vak["resultaat"].ToString()))
                                                 {
+
                                                     case 0:
-                                                        <img src="~/css/kruisje.jpg" />
-                                                        break;
-                                                    case 1:
                                                         <img src="~/css/lopend.jpg" />
                                                         break;
-                                                    case 2:
+                                                    case 1:
                                                         <img src="~/css/vinkje.jpg" />
+                                                        break;
+                                                    case 2:
+                                                        <img src="~/css/kruisje.jpg" />
+                                                        break;
+                                                    default: <img src="~/css/lopend.jpg" />
                                                         break;
                                                 }
                                             </td>
@@ -78,7 +81,7 @@
                     {
                         <div id="periode@(i)" class="periode">
                             @{
-                                string data = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID AND enrolled.UserId=@0 AND enrolled.usertype=@1 WHERE period=@2";
+                                string data = "SELECT courseID, naam, status FROM courses INNER JOIN enrolled ON courses.Id = enrolled.courseID AND enrolled.UserId=@0 AND enrolled.usertype=@1 WHERE period=@2 AND status=1";
                                 dynamic courses = db.Query(data, userID, userType, i);
                             }
                             <div class="cellcontainer">
@@ -88,7 +91,7 @@
                                     {
                                         <tr class="vak">
                                             <td>
-                                                <img id="dot" src="~/Includes/Images/dot.jpg"/>
+                                                <img id="dot" src="~/Includes/Images/dot.jpg" />
                                                 <a href="~/Course.cshtml?id=@vak.courseId">@vak["naam"]</a>
                                             </td>
 
