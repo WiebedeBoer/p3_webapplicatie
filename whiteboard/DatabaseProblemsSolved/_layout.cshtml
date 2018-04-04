@@ -1,4 +1,3 @@
-﻿
 @{
     App app = new App();
     dynamic currentuser = app.user.getUser();
@@ -15,7 +14,7 @@
 <body>
     <header>
         <div class="header row">
-            <a href="/overzicht.cshtml" class="column"><img id="homeknop" src="/css/overzicht-homeknop.png"></a>
+            <a href="/overzicht.cshtml" class="column"><img id="homeknop" src="~/Includes/Images/overzicht-homeknop.png"></a>
             <div id="nav" class="column">
                 @RenderSection("Nav", true)
                 <form action="~/Overzicht.cshtml" get">
@@ -33,7 +32,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <img src="~/css/profilepic.jpg" alt="user img" id="profilepic" />
+                                <img src="~/Includes/Images/profilepic.jpg" alt="user img" id="profilepic" />
                             </td>
                             <td>
                                 <p><strong>@currentuser.firstName @currentuser.lastName</strong></p>
