@@ -57,19 +57,19 @@ CREATE TABLE [dbo].[subcourses] (
 );
 
 CREATE TABLE [dbo].[course_items] (
-    [Id]          INT           IDENTITY (1, 1) NOT NULL,
-    [naam]        NVARCHAR (50) NOT NULL,
-    [CourseID]    INT           NOT NULL,
-    [description] TEXT          NULL,
-    [priority]  INT           NOT NULL,
-    [filename]    VARCHAR (255) NULL,
-    [type]        VARCHAR(50) NOT NULL,
-    [timeAdded]  DateTime NOT NULL,
-    [deadline]  DateTime  NULL,
-    [timeAddedVisible]  TINYINT NOT NULL,
+    [Id]               INT           IDENTITY (1, 1) NOT NULL,
+    [naam]             NVARCHAR (50) NOT NULL,
+    [CourseID]         INT           NOT NULL,
+    [description]      TEXT          NULL,
+    [priority]         INT           NOT NULL,
+    [files]            TEXT          NULL,
+    [type]             VARCHAR (50)  NOT NULL,
+    [timeAdded]        DATETIME      NOT NULL,
+    [timeAddedVisible] TINYINT       NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+ 
 CREATE TABLE [dbo].[enrolled] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
     [usertype]  TINYINT       NOT NULL,
@@ -81,15 +81,17 @@ CREATE TABLE [dbo].[enrolled] (
 );
 
 CREATE TABLE [dbo].[opdrachten] (
-    [Id]       INT      IDENTITY (1, 1) NOT NULL,
-    [ItemID] INT      NOT NULL,
-    [UserId]   INT      NOT NULL,
-    [usertype] TINYINT  NOT NULL,
-    [cijfer]   INT      DEFAULT 0 NOT NULL,
-    [status]   TINYINT  NULL,
+    [Id]        INT      IDENTITY (1, 1) NOT NULL,
+    [ItemId]    INT      NOT NULL,
+    [UserId]    INT      NOT NULL,
+	[comments]  TEXT     NULL,
+	[files]     TEXT     NULL,
+    [cijfer]    INT      DEFAULT 0 NOT NULL,
+    [status]    TINYINT  NULL,
     [submitted] DATETIME NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
 
 CREATE TABLE [dbo].[opdracht_course] (
     [Id]               INT           IDENTITY (1, 1) NOT NULL,
