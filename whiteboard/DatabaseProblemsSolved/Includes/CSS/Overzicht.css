@@ -1,15 +1,31 @@
-﻿*{
+﻿* {
     color: black;
 }
+
+
+
 .vak img {
     max-height: 50%;
     max-width: 35%;
     float: right;
 }
 
+
+
 .vak {
     font-size: 2.5vh;
 }
+
+
+
+#dot {
+    height: 25px;
+    width: 25px;
+    float: left;
+    margin-right: 25px;
+}
+
+
 
 div.overzichtblokken {
     margin-left: 150px;
@@ -20,6 +36,8 @@ div.overzichtblokken {
     border: 3px;
 }
 
+
+
 div.vak {
     text-align: left;
     height: 45px;
@@ -28,12 +46,16 @@ div.vak {
     font-size: 16pt
 }
 
+
+
 div.periode {
     text-align: center;
     display: table-cell;
     height: 740px;
     /*! background-color:white; */
 }
+
+
 
 .cellcontainer {
     margin: 0 auto;
@@ -44,18 +66,32 @@ div.periode {
     text-align: center;
 }
 
+
+
+    .cellcontainer a {
+        color: black !important;
+    }
+
+
+
 .vak td {
     width: 275px;
 }
+
+
 
 #overzichtblokken {
     display: table;
     width: 100vw;
 }
 
+
+
 #overzichtblokkenrow {
     display: table-row;
 }
+
+
 
 div#periodesOverzicht {
     margin-left: 150px;
@@ -64,3 +100,90 @@ div#periodesOverzicht {
     text-align: left;
 }
 
+
+
+.contentCourse {
+    color: black !important;
+    height: 100%;
+    display: inline-block;
+}
+
+
+
+.contentAdd {
+    height: 100%;
+    display: inline-block;
+}
+
+
+
+    .contentAdd span {
+        display: block;
+        padding: 20px 0px;
+        border: 1px solid black;
+        margin-bottom: 10px;
+    }
+
+
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+
+.itemCourse {
+    border: 1px solid black;
+    background-color: #85CAD6;
+    padding-left:30px;
+    padding-bottom:15px;
+}
+
+
+
+    .itemCourse form {
+        margin-top: 20px;
+        padding-top: 20px;
+        padding-left: 10px;
+        margin-left: 20px;
+        width: 820px;
+        background-color: #85CAD6;
+    }
+
+
+
+    .itemCourse textarea {
+        max-width: 800px;
+        height: 200px;
+    }
+
+
+
+    .itemCourse input[type=text] {
+        width: 200px;
+    }
+
+
+
+    .itemCourse input[type=submit] {
+        margin: 5px 0px;
+        margin-left: 80%;
+    }
+
+
+
+.iframeDat {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.iframeWrapper {
+    width: 1500px;
+}
