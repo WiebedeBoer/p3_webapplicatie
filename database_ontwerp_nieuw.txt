@@ -91,11 +91,17 @@ CREATE TABLE [dbo].[opdrachten] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-CREATE TABLE [dbo].[opdracht_course]
-(
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
-    [naam] VARCHAR(50) NOT NULL, 
-    [courseID] INT NOT NULL
+CREATE TABLE [dbo].[opdracht_course] (
+    [Id]               INT           IDENTITY (1, 1) NOT NULL,
+    [naam]             NVARCHAR (50) NOT NULL,
+    [CourseID]         INT           NOT NULL,
+    [description]      TEXT          NULL,
+    [priority]         INT           NULL,
+    [files]			   TEXT			NULL,
+    [timeAdded]        DATETIME      NOT NULL,
+    [deadline]         DATETIME      NULL,
+    [timeAddedVisible] TINYINT       NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
 CREATE TABLE [dbo].[becijfering] (
