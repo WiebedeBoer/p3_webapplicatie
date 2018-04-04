@@ -76,7 +76,7 @@ CREATE TABLE [dbo].[enrolled] (
     [CourseID]  INT           NOT NULL,
     [UserId]    INT           NOT NULL,
     [status]    TINYINT          NULL,
-    [resultaat]    TINYINT          NULL,
+    [resultaat] TINYINT  DEFAULT 0 NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
@@ -85,7 +85,7 @@ CREATE TABLE [dbo].[opdrachten] (
     [ItemID] INT      NOT NULL,
     [UserId]   INT      NOT NULL,
     [usertype] TINYINT  NOT NULL,
-    [cijfer]   INT      DEFAULT ((0)) NOT NULL,
+    [cijfer]   INT      DEFAULT 0 NOT NULL,
     [status]   TINYINT  NULL,
     [submitted] DATETIME NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
@@ -96,10 +96,10 @@ CREATE TABLE [dbo].[opdracht_course] (
     [naam]             NVARCHAR (50) NOT NULL,
     [CourseID]         INT           NOT NULL,
     [description]      TEXT          NULL,
-    [priority]         INT           NULL,
+    [priority]         INT DEFAULT 0 NOT NULL,
     [files]			   TEXT			NULL,
     [timeAdded]        DATETIME      NOT NULL,
-    [deadline]         DATETIME      NULL,
+    [deadline]         DATETIME      NOT NULL,
     [timeAddedVisible] TINYINT       NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
