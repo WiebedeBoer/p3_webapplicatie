@@ -70,6 +70,7 @@ CREATE TABLE [dbo].[enrolled] (
     [CourseID]  INT           NOT NULL,
     [UserId]    INT           NOT NULL,
     [status]    TINYINT          NULL,
+    [resultaat]    TINYINT          NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
