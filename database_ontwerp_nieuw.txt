@@ -100,13 +100,12 @@ CREATE TABLE [dbo].[opdracht_course]
 
 CREATE TABLE [dbo].[becijfering] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
-    [usertype]   NVARCHAR (20) NOT NULL,
     [CourseID]  INT           NOT NULL,
     [StudentId]    INT           NOT NULL,
-    [AssessorId] INT           NOT NULL,
-    [status]    TINYINT          NULL,
+    [AssessorId] INT           NULL,
+    [status]    TINYINT        DEFAULT ((0))   NULL,
     [delivered] DATETIME      NULL,
-    [cijfer] DECIMAL      NULL,
+    [cijfer] DECIMAL      DEFAULT ((1)) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
