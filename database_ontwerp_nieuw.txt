@@ -6,8 +6,10 @@ CREATE TABLE [dbo].[users] (
     [password]  NVARCHAR (MAX) NOT NULL,
     [studieID]  INT            NOT NULL,
     [status]    TINYINT        NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY (studieID) references studies(Id)
 );
+
 
 CREATE TABLE [dbo].[admins] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
@@ -18,8 +20,10 @@ CREATE TABLE [dbo].[admins] (
     [usertype]  TINYINT NOT NULL,
     [studieID]  INT           NULL,
     [status]    TINYINT       NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY (studieID) references studies(Id)
 );
+
 CREATE TABLE [dbo].[Files] (
     [Id]            INT  IDENTITY (1, 1) NOT NULL,
     [Name]          TEXT NOT NULL,
