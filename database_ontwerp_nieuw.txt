@@ -125,5 +125,8 @@ CREATE TABLE [dbo].[cijfers] (
     [OpdrachtID]  INT           NOT NULL,
     [CijferID]  INT           NOT NULL,
     [StudentId]    INT           NOT NULL,
+        [AssessorId] INT           NULL,
+    [status]    TINYINT        DEFAULT ((0))   NULL,
+[delivered] DATETIME NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
