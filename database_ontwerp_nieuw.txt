@@ -58,7 +58,9 @@ CREATE TABLE [dbo].[subcourses] (
     [naam]        NVARCHAR (50) NOT NULL,
     [courseID]    INT           NOT NULL,
     [subcourseID] INT           NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    	FOREIGN KEY (courseID) references courses(Id),
+	FOREIGN KEY (subcourseID) references courses(Id)
 );
 
 CREATE TABLE [dbo].[course_items] (
