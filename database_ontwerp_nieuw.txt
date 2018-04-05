@@ -43,7 +43,7 @@ CREATE TABLE [dbo].[studies] (
 CREATE TABLE [dbo].[courses] (
     [Id]           INT           IDENTITY (1, 1) NOT NULL,
     [naam]         NVARCHAR (50) NOT NULL,
-    [jaar]       TINYINT         DEFAULT (1)  NOT NULL,
+    [jaar]       TINYINT         DEFAULT 1  NOT NULL,
     [period]       INT           NOT NULL,
     [studieID]     INT           NOT NULL,
     [priority]     INT           NOT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE [dbo].[cijfers] (
     [CourseID]  INT           NOT NULL,
     [OpdrachtID]  INT           NOT NULL,
     [StudentId]    INT           NOT NULL,
-    [status]    TINYINT        DEFAULT (0)   NULL,
+    [status]    TINYINT        DEFAULT 0   NULL,
 [delivered] DATETIME NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     	FOREIGN KEY (CourseID) references courses(Id),
