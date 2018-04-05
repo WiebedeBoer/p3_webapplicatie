@@ -11,17 +11,8 @@
     dynamic currentuser = app.user.getUser();
     int usersoort = int.Parse(currentuser["userType"].ToString());
     int userID = int.Parse(currentuser["Id"].ToString());
-    // string usermail = currentuser["email"].ToString();
 
-    /* string usertype = "";
-     if (usermail.Split('@')[1] == "nhl.nl")
-     {
-         usertype = "student";
-     }
-     else
-     {
-         usertype = "docent";
-     }*/
+    //gebruikerstype zetten
     string usertype = "";
     if (usersoort == 0)
     {
@@ -37,8 +28,8 @@
     }
 
     @section Head {
-        <!--link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" /-->
-        <link rel="stylesheet" type="text/css" href="~/css/overzichtstyle_oudje.css" />
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />
+        <!--<link rel="stylesheet" type="text/css" href="~/css/overzichtstyle_oudje.css" />-->
     }
     @section Nav {
 
@@ -47,21 +38,21 @@
     {
         @if (usertype == "student")
         {
-            //dynamic currentuser = app.user.getUser();
-            //int userID = int.Parse(currentuser["Id"].ToString());
 
+            //studie id ophalen
             var vstudieID = db.QueryValue("SELECT studieID FROM users WHERE Id=@0", userID);
             int studieID = Convert.ToInt32(vstudieID);
 
-            var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
+            //vakken ophalen bij die studie
+            var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0  AND subfolder = 0";
             var vakken = db.Query(vakCommand, userID);
 
             if (IsPost)
             {
                 int eId = Convert.ToInt32(Request.Form["enrollen"]);
-                //string gebruikerstype = "student";
-
-                var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0";
+                
+                //tellen of course bestaat
+                var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0  AND subfolder = 0";
                 int CountCourse = Convert.ToInt32(db.QueryValue(CoCommand, eId));
 
                 var CoECommand = "SELECT COUNT(id) FROM enrolled WHERE CourseID =@0 AND UserId =@1 AND status =0";
@@ -79,19 +70,16 @@
                 }
             }
 
-            //var CoECCommand = "SELECT COUNT(id) FROM courses WHERE studieID =@0";
-            //int CountECourse = Convert.ToInt32(db.QueryValue(CoECCommand, studieID));
-
+            //tellen of er courses zijn om te enrollen
             var CoEnrCommand = "SELECT COUNT(id) FROM enrolled WHERE UserId =@0 AND status =0";
             int EnrCourse = Convert.ToInt32(db.QueryValue(CoEnrCommand, userID));
 
             if (EnrCourse >= 1)
             {
-                var vakkCommand = "SELECT courses.Id, courses.naam AS naam FROM courses INNER JOIN enrolled ON enrolled.CourseID=courses.Id AND enrolled.UserId=@0 AND enrolled.status=0 AND enrolled.usertype =0";
+                var vakkCommand = "SELECT courses.Id AS Id, courses.naam AS naam FROM courses INNER JOIN enrolled ON enrolled.CourseID=courses.Id AND enrolled.UserId=@0 AND enrolled.status=0 AND enrolled.usertype =0  AND courses.subfolder = 0";
                 var vakjes = db.Query(vakkCommand, userID);
 
-                //string naampjes = "SELECT Id, naam FROM enrolled INNER JOIN courses ON courses.Id = enrolled.courseID WHERE period=1";
-                //dynamic vakken = db.Query(naampjes, studieID);
+                //display vakken
                 <div class="cellcontainer">
                     <h2>Enroll</h2>
                     <form action="~/enroll.cshtml" method="post">
@@ -112,11 +100,8 @@
         //als gebruiker is docent
         else
         {
-            //dynamic currentuser = app.user.getUser();
-            //int userID = int.Parse(currentuser["Id"].ToString());
 
-            //int userID = 1;
-
+            //haal studie id op uit admins waar type is 0 want gebruiker is docent
             var vstudieID = db.QueryValue("SELECT studieID FROM admins WHERE Id=@0 AND usertype =0", userID);
             int studieID = Convert.ToInt32(vstudieID);
 
@@ -129,7 +114,7 @@
                 //auto enroll students
                 if (sactie == "autoenroll")
                 {
-                    //string gebruikerstype = "docent";
+                    
                     int gebruikersoort = 0;
 
                     var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0";
@@ -137,7 +122,7 @@
 
                     var CoECommand = "SELECT COUNT(id) FROM enrolled WHERE CourseID =@0 AND UserId =@1 AND usertype=0";
                     int ECourse = Convert.ToInt32(db.QueryValue(CoECommand, eId, userID));
-
+                    //tel of vak bestaat en of er studenten zijn
                     if (CountCourse == 1 && ECourse == 0)
                     {
                         var updCommand = "UPDATE enrolled SET status = 1 WHERE usertype =@0 AND CourseID =@1 AND Status =0";
@@ -152,14 +137,13 @@
                 //enroll docent self
                 else if (sactie == "enrolldocent")
                 {
-                    var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0";
+                    var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0  AND subfolder = 0";
                     int CountCourse = Convert.ToInt32(db.QueryValue(CoCommand, eId));
 
                     var CoECommand = "SELECT COUNT(id) FROM enrolled WHERE CourseID =@0 AND UserId =@1 AND usertype =1";
                     int ECourse = Convert.ToInt32(db.QueryValue(CoECommand, eId, userID));
 
-                    //string gebruikerstype = "student";
-
+                    //tel of er unenrolled is
                     if (CountCourse == 1 && ECourse == 1)
                     {
                         var updCommand = "UPDATE enrolled SET status = 1 WHERE usertype =1 AND CourseID =@0 AND UserId =@1";
@@ -177,7 +161,7 @@
 
 
             //display enroll auto students
-            var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
+            var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0  AND subfolder = 0";
             var vakken = db.Query(vakCommand, userID);
             <div>
                 <h2>Auto Enroll Students</h2>
@@ -193,18 +177,17 @@
                     </select>
                     <input type="submit" value="auto enroll all students" class="waves-effect waves-light btn" />
                 </form>
-                </div>
+            </div>
 
             //enroll docent self
-            //var vakdCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
-            //var vakkend = db.Query(vakdCommand, userID);
 
+            //tel of er te enrollen is
             var CoEnrCommand = "SELECT COUNT(id) FROM enrolled WHERE UserId =@0 AND status =0 AND usertype =1";
             int EnrCourse = Convert.ToInt32(db.QueryValue(CoEnrCommand, userID));
 
             if (EnrCourse >= 1)
             {
-                var vakkCommand = "SELECT courses.Id, courses.naam AS naam FROM courses INNER JOIN enrolled ON enrolled.CourseID=courses.Id AND enrolled.UserId=@0 AND enrolled.status=0 AND enrolled.usertype=1";
+                var vakkCommand = "SELECT courses.Id, courses.naam AS naam FROM courses INNER JOIN enrolled ON enrolled.CourseID=courses.Id AND enrolled.UserId=@0 AND enrolled.status=0 AND enrolled.usertype=1 AND courses.subfolder = 0";
                 var vakjes = db.Query(vakkCommand, userID);
 
                 <div>
@@ -221,12 +204,11 @@
                         </select>
                         <input type="submit" value="enroll self" class="waves-effect waves-light btn" />
                     </form>
-                    </div>
-                    }
+                </div>
+            }
 
-                    }
+        }
 
-                    }
-                    }
-
+    }
+}
 
