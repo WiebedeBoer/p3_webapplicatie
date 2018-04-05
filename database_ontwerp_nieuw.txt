@@ -120,7 +120,5 @@ CREATE TABLE [dbo].[cijfers] (
     [StudentId]    INT           NOT NULL,
     [status]    TINYINT        DEFAULT (0)   NULL,
 [delivered] DATETIME NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC),
-    FOREIGN KEY (StudentID) references users(Id),
-    FOREIGN KEY (CourseID) references courses(Id)
+    PRIMARY KEY CLUSTERED ([Id] ASC)
 );
