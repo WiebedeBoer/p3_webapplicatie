@@ -73,7 +73,8 @@ CREATE TABLE [dbo].[course_items] (
     [type]             VARCHAR (50)  NOT NULL,
     [timeAdded]        DATETIME      NOT NULL,
     [timeAddedVisible] TINYINT       NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY (CourseID) references courses(Id),
 );
 
  
