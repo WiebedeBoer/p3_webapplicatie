@@ -24,13 +24,14 @@
 @section Main {
     @{
         //cijfers ophalen uit db, alleen voor die student
-        string data = "SELECT naam, cijfer, resultaat FROM courses INNER JOIN cijfers ON courses.Id = cijfers.CourseID AND cijfers.StudentId=@0";
+        string data = "SELECT naam, OpdrachtID, cijfer, resultaat FROM courses INNER JOIN cijfers ON courses.Id = cijfers.CourseID AND cijfers.StudentId=@0";
         dynamic courses = db.Query(data, userID);
 
         <h1>Cijferlijst</h1>
         <table>
             <tr>
                 <th>Vak</th>
+                <th>Opdracht</th>
                 <th>Cijfer</th>
                 <th>Resultaat</th>
             </tr>
@@ -40,6 +41,7 @@
 
                 <tr>
                     <td>@vakcijfer.naam</td>
+                    <td>@vakcijfer.OpdrachtID</td>
                     <td>@vakcijfer.cijfer</td>
                     <td>@vakcijfer.resultaat</td>
                 </tr>
