@@ -123,9 +123,7 @@ CREATE TABLE [dbo].[cijfers] (
     [resultaat]    NVARCHAR(50)      NULL,
     [CourseID]  INT           NOT NULL,
     [OpdrachtID]  INT           NOT NULL,
-    [CijferID]  INT           NOT NULL,
     [StudentId]    INT           NOT NULL,
-        [AssessorId] INT           NULL,
     [status]    TINYINT        DEFAULT (0)   NULL,
 [delivered] DATETIME NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
