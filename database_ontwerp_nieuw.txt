@@ -49,7 +49,8 @@ CREATE TABLE [dbo].[courses] (
     [priority]     INT           NOT NULL,
     [subfolder]    INT           DEFAULT ((0)) NOT NULL,
     [maincourseID] INT           NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY (studieID) references studies(Id)
 );
 
 CREATE TABLE [dbo].[subcourses] (
@@ -110,17 +111,6 @@ CREATE TABLE [dbo].[opdracht_course] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-CREATE TABLE [dbo].[becijfering] (
-    [Id]        INT           IDENTITY (1, 1) NOT NULL,
-    [CourseID]  INT           NOT NULL,
-    [StudentId]    INT           NOT NULL,
-    [AssessorId] INT           NULL,
-    [status]    TINYINT        DEFAULT ((0))   NULL,
-    [delivered] DATETIME      NULL,
-    [cijfer] DECIMAL      DEFAULT ((1)) NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
-);
-
 CREATE TABLE [dbo].[cijfers] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
     [Cijfer]  DECIMAL          NOT NULL,
@@ -130,5 +120,7 @@ CREATE TABLE [dbo].[cijfers] (
     [StudentId]    INT           NOT NULL,
     [status]    TINYINT        DEFAULT (0)   NULL,
 [delivered] DATETIME NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY (StudentID) references users(Id),
+    FOREIGN KEY (CourseID) references courses(Id)
 );
