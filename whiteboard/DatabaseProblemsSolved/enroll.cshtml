@@ -11,7 +11,7 @@
     dynamic currentuser = app.user.getUser();
     int usersoort = int.Parse(currentuser["userType"].ToString());
     int userID = int.Parse(currentuser["Id"].ToString());
-
+    
     //gebruikerstype zetten
     string usertype = "";
     if (usersoort == 0)
@@ -28,7 +28,7 @@
     }
 
     @section Head {
-        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Overzicht.css" />
+        <link rel="stylesheet" type="text/css" href="~/Includes/CSS/Enroll.css" />
         <!--<link rel="stylesheet" type="text/css" href="~/css/overzichtstyle_oudje.css" />-->
     }
     @section Nav {
@@ -39,19 +39,17 @@
         @if (usertype == "student")
         {
 
-            //studie id ophalen
             var vstudieID = db.QueryValue("SELECT studieID FROM users WHERE Id=@0", userID);
             int studieID = Convert.ToInt32(vstudieID);
 
-            //vakken ophalen bij die studie
             var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0  AND subfolder = 0";
             var vakken = db.Query(vakCommand, userID);
 
             if (IsPost)
             {
                 int eId = Convert.ToInt32(Request.Form["enrollen"]);
-                
-                //tellen of course bestaat
+                //string gebruikerstype = "student";
+
                 var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0  AND subfolder = 0";
                 int CountCourse = Convert.ToInt32(db.QueryValue(CoCommand, eId));
 
@@ -70,6 +68,8 @@
                 }
             }
 
+
+
             //tellen of er courses zijn om te enrollen
             var CoEnrCommand = "SELECT COUNT(id) FROM enrolled WHERE UserId =@0 AND status =0";
             int EnrCourse = Convert.ToInt32(db.QueryValue(CoEnrCommand, userID));
@@ -83,7 +83,7 @@
                 <div class="cellcontainer">
                     <h2>Enroll</h2>
                     <form action="~/enroll.cshtml" method="post">
-                        <select name="enrollen">
+                        <select class="enrollselect" name="enrollen">
                             @foreach (var record in vakjes)
                             {
                                 <option value="@record.Id">@record.naam</option>
@@ -100,8 +100,8 @@
         //als gebruiker is docent
         else
         {
-
             //haal studie id op uit admins waar type is 0 want gebruiker is docent
+
             var vstudieID = db.QueryValue("SELECT studieID FROM admins WHERE Id=@0 AND usertype =0", userID);
             int studieID = Convert.ToInt32(vstudieID);
 
@@ -114,7 +114,6 @@
                 //auto enroll students
                 if (sactie == "autoenroll")
                 {
-                    
                     int gebruikersoort = 0;
 
                     var CoCommand = "SELECT COUNT(id) FROM courses WHERE Id =@0";
@@ -122,7 +121,7 @@
 
                     var CoECommand = "SELECT COUNT(id) FROM enrolled WHERE CourseID =@0 AND UserId =@1 AND usertype=0";
                     int ECourse = Convert.ToInt32(db.QueryValue(CoECommand, eId, userID));
-                    //tel of vak bestaat en of er studenten zijn
+
                     if (CountCourse == 1 && ECourse == 0)
                     {
                         var updCommand = "UPDATE enrolled SET status = 1 WHERE usertype =@0 AND CourseID =@1 AND Status =0";
@@ -144,6 +143,7 @@
                     int ECourse = Convert.ToInt32(db.QueryValue(CoECommand, eId, userID));
 
                     //tel of er unenrolled is
+
                     if (CountCourse == 1 && ECourse == 1)
                     {
                         var updCommand = "UPDATE enrolled SET status = 1 WHERE usertype =1 AND CourseID =@0 AND UserId =@1";
@@ -163,11 +163,11 @@
             //display enroll auto students
             var vakCommand = "SELECT Id, naam FROM courses WHERE studieID =@0  AND subfolder = 0";
             var vakken = db.Query(vakCommand, userID);
-            <div>
+            <div class="cellcontainer">
                 <h2>Auto Enroll Students</h2>
                 <form action="~/enroll.cshtml" method="post">
                     <input type="hidden" name="actie" value="autoenroll" />
-                    <select name="enrollen">
+                    <select class="enrollselect" name="enrollen">
                         @foreach (var recrod in vakken)
                         {
 
@@ -180,8 +180,9 @@
             </div>
 
             //enroll docent self
+            //var vakdCommand = "SELECT Id, naam FROM courses WHERE studieID =@0";
+            //var vakkend = db.Query(vakdCommand, userID);
 
-            //tel of er te enrollen is
             var CoEnrCommand = "SELECT COUNT(id) FROM enrolled WHERE UserId =@0 AND status =0 AND usertype =1";
             int EnrCourse = Convert.ToInt32(db.QueryValue(CoEnrCommand, userID));
 
@@ -190,11 +191,11 @@
                 var vakkCommand = "SELECT courses.Id, courses.naam AS naam FROM courses INNER JOIN enrolled ON enrolled.CourseID=courses.Id AND enrolled.UserId=@0 AND enrolled.status=0 AND enrolled.usertype=1 AND courses.subfolder = 0";
                 var vakjes = db.Query(vakkCommand, userID);
 
-                <div>
+                <div class="cellcontainer">
                     <h2>Enroll Self</h2>
                     <form action="~/enroll.cshtml" method="post">
                         <input type="hidden" name="actie" value="enrolldocent" />
-                        <select name="enrollen">
+                        <select class="enrollselect" name="enrollen">
                             @foreach (var record in vakjes)
                             {
 
