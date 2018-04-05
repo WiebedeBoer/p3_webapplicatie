@@ -84,7 +84,8 @@ CREATE TABLE [dbo].[enrolled] (
     [UserId]    INT           NOT NULL,
     [status]    TINYINT          NULL,
     [resultaat] TINYINT  DEFAULT 0 NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY (CourseID) references courses(Id)
 );
 
 CREATE TABLE [dbo].[opdrachten] (
@@ -96,7 +97,9 @@ CREATE TABLE [dbo].[opdrachten] (
     [cijfer]    INT      DEFAULT 0 NOT NULL,
     [status]    TINYINT  NULL,
     [submitted] DATETIME NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY (UserID) references users(Id),
+    FOREIGN KEY (ItemID) references opdracht_course(Id)
 );
 
 
@@ -110,7 +113,8 @@ CREATE TABLE [dbo].[opdracht_course] (
     [timeAdded]        DATETIME      NOT NULL,
     [deadline]         DATETIME      NOT NULL,
     [timeAddedVisible] TINYINT       NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY (CourseID) references courses(Id)
 );
 
 CREATE TABLE [dbo].[cijfers] (
@@ -122,5 +126,8 @@ CREATE TABLE [dbo].[cijfers] (
     [StudentId]    INT           NOT NULL,
     [status]    TINYINT        DEFAULT (0)   NULL,
 [delivered] DATETIME NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    	FOREIGN KEY (CourseID) references courses(Id),
+	FOREIGN KEY (StudentId) references users(Id),
+		FOREIGN KEY (CourseID) references opdracht_courses(Id)	
 );
