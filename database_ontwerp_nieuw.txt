@@ -120,7 +120,7 @@ CREATE TABLE [dbo].[becijfering] (
 CREATE TABLE [dbo].[cijfers] (
     [Id]        INT           IDENTITY (1, 1) NOT NULL,
     [Cijfer]  DECIMAL          NOT NULL,
-    [resultaat]    NVARCHAR     DEFAULT(voorlopig)      NOT NULL,
+    [resultaat]    NVARCHAR(50)      NULL,
     [CourseID]  INT           NOT NULL,
     [OpdrachtID]  INT           NOT NULL,
     [CijferID]  INT           NOT NULL,
