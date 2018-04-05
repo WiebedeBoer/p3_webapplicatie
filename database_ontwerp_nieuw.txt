@@ -126,7 +126,7 @@ CREATE TABLE [dbo].[cijfers] (
     [CijferID]  INT           NOT NULL,
     [StudentId]    INT           NOT NULL,
         [AssessorId] INT           NULL,
-    [status]    TINYINT        DEFAULT ((0))   NULL,
+    [status]    TINYINT        DEFAULT (0)   NULL,
 [delivered] DATETIME NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
